@@ -1,0 +1,54 @@
+---
+meta:
+    title: "Wie setzt man eine Many-to-Many-Beziehung in SQL um?"
+    description: "Many-to-Many-Beziehungen werden in SQL über eine Zwischentabelle mit Foreign Keys umgesetzt. Erfahre anhand von Beispielen, wie du solche Beziehungen zwischen Tabellen modellierst."
+---
+
+**Many-to-Many**-Beziehungen entstehen in relationalen Datenbanken,
+wenn ein Datensatz aus der ersten Tabelle zu mehreren Datensätzen der zweiten Tabelle gehören kann — und umgekehrt.
+
+In SQL setzt du solche Beziehungen über eine Zwischentabelle um (auch Verknüpfungs- oder Junction-Tabelle genannt),
+die beide Haupttabellen über Foreign Keys verbindet.
+
+## So setzt du eine Many-to-Many-Beziehung in SQL um
+
+- **Lege die beiden Haupttabellen an**, die miteinander verknüpft werden sollen.
+- **Erstelle eine Zwischentabelle** mit Foreign Keys auf die Primary Keys beider Haupttabellen.
+- **Definiere die Foreign Keys und einen zusammengesetzten Primary Key** in der Zwischentabelle, um referenzielle Integrität und eindeutige Beziehungspaare sicherzustellen.
+
+## Beispielumsetzung
+
+Stell dir ein Szenario mit den Tabellen `Student` und `Course` vor:
+ein Student kann sich für mehrere Kurse anmelden,
+und ein Kurs kann von mehreren Studierenden besucht werden.
+
+- Studierenden-Tabelle anlegen:
+    ```sql
+    CREATE TABLE Student (
+        StudentID INT PRIMARY KEY,
+        Name VARCHAR(100)
+    );
+    ```
+- Kurs-Tabelle anlegen:
+    ```sql
+    CREATE TABLE Course (
+        CourseID INT PRIMARY KEY,
+        Title VARCHAR(100)
+    );
+    ```
+- Zwischentabelle für die Many-to-Many-Beziehung anlegen:
+    ```sql
+    CREATE TABLE StudentCourse (
+        StudentID INT,
+        CourseID INT,
+        PRIMARY KEY (StudentID, CourseID),
+        FOREIGN KEY (StudentID) REFERENCES Student(StudentID),
+        FOREIGN KEY (CourseID) REFERENCES Course(CourseID)
+    );
+    ```
+
+Ergebnis:
+
+- Die **Zwischentabelle** `StudentCourse` hält Paare aus `StudentID` und `CourseID`, die jeweils eine Verknüpfung zwischen Studierenden und Kursen abbilden.
+- Der **zusammengesetzte Primary Key** (`StudentID`, `CourseID`) sorgt dafür, dass jedes Paar einzigartig bleibt und Duplikate gar nicht erst entstehen.
+- Die **Foreign Keys** sichern die Datenintegrität, indem sie auf die passenden Einträge in den Tabellen `Student` und `Course` verweisen.

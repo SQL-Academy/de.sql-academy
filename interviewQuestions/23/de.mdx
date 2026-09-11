@@ -1,0 +1,60 @@
+---
+meta:
+    title: "Was ist NULL und wie arbeitet man damit in SQL?"
+    description: "NULL steht in SQL für fehlende Daten. Erfahre, wie du mit den Operatoren IS NULL und IS NOT NULL sowie den Funktionen COALESCE, ISNULL und IFNULL damit umgehst."
+---
+
+> **NULL** ist ein spezieller Wert in SQL, der einen fehlenden oder unbekannten Wert kennzeichnet.
+
+## Besonderheiten von NULL:
+
+- `NULL` ist nicht dasselbe wie ein leerer String oder die Zahl Null.
+- Operationen mit `NULL` liefern `NULL`.
+- Der Vergleich `NULL` = `NULL` ergibt `FALSE`.
+
+## Mit NULL arbeiten
+
+Um auf `NULL` zu prüfen, nutzt du den Operator `IS NULL` oder `IS NOT NULL`.
+
+```sql
+-- Datensätze mit unbekanntem Geburtsdatum finden
+SELECT * FROM employees WHERE birth_date IS NULL;
+
+-- Datensätze mit bekanntem Geburtsdatum finden
+SELECT * FROM employees WHERE birth_date IS NOT NULL;
+```
+
+## Funktionen für die Arbeit mit NULL
+
+- <a href="https://sql-academy.org/de/handbook/COALESCE" target="_blank">
+    **COALESCE**
+  </a>
+
+    Liefert das erste Element der Liste, das nicht `NULL` ist.
+
+    ```sql
+    COALESCE(val1[, val2, ...., val_n])
+    ```
+
+- <a href="https://sql-academy.org/de/handbook/ISNULL" target="_blank">
+    **ISNULL**
+  </a>
+
+    Liefert 1 oder 0, je nachdem, ob der Ausdruck `NULL` ist.
+
+    ```sql
+    ISNULL(value)
+    ```
+
+- <a href="https://sql-academy.org/de/handbook/IFNULL" target="_blank">
+    **IFNULL**
+  </a>
+
+    Liefert den ersten Wert, sofern dieser nicht `NULL` ist. Andernfalls wird der zweite
+    Wert zurückgegeben.
+
+    ```sql
+    IFNULL(value, alternative_value)
+    ```
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„COALESCE in SQL: NULL ersetzen und das NULLIF-Duo“](https://sql-academy.org/de/blog/sql-coalesce).

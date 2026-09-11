@@ -1,0 +1,32 @@
+---
+meta:
+    title: "Erkläre den Unterschied zwischen UNION und UNION ALL"
+    description: "UNION in SQL führt Ergebnisse mehrerer Abfragen zusammen und entfernt Duplikate, UNION ALL behält Duplikate und ist schneller. Erfahre die wichtigsten Unterschiede."
+---
+
+## UNION:
+
+- Führt die Ergebnisse von zwei oder mehr `SELECT`-Abfragen zusammen.
+- Entfernt Duplikate aus dem kombinierten Ergebnis.
+
+Syntax
+
+```sql
+SELECT column_list FROM table1
+UNION
+SELECT column_list FROM table2;
+```
+
+## UNION ALL:
+
+- Führt die Ergebnisse von zwei oder mehr `SELECT`-Abfragen zusammen.
+- Behält Duplikate im kombinierten Ergebnis.
+- Schneller, da keine zusätzliche Duplikatentfernung erfolgt.
+
+Syntax
+
+```sql
+SELECT column_list FROM table1
+UNION ALL
+SELECT column_list FROM table2;
+```

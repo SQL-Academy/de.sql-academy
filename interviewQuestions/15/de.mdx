@@ -1,0 +1,44 @@
+---
+meta:
+    title: "Was sind Aggregatfunktionen? Nenne Beispiele"
+    description: "Aggregatfunktionen in SQL berechnen Werte über eine Menge von Zeilen. Erfahre, wie du COUNT, SUM, AVG, MAX und MIN für die Datenanalyse einsetzt."
+---
+
+Aggregatfunktionen führen Berechnungen über eine Menge von Werten aus und geben einen einzelnen Wert zurück.
+Sie werden oft in Kombination mit `GROUP BY` verwendet.
+
+## Wichtigste Aggregatfunktionen
+
+- `COUNT()` — zählt die Anzahl der Zeilen.
+- `SUM()` — berechnet die Summe der Werte.
+- `AVG()` — berechnet den Durchschnittswert.
+- `MAX()` — findet den größten Wert.
+- `MIN()` — findet den kleinsten Wert.
+
+## Anwendungsbeispiele
+
+1. Anzahl der Mitarbeiter zählen:
+
+```sql
+SELECT COUNT(*) FROM employees;
+```
+
+2. Durchschnittsgehalt pro Abteilung:
+
+```sql
+SELECT department_id, AVG(salary) AS average_salary
+FROM employees
+GROUP BY department_id;
+```
+
+3. Höchstes Gehalt im Unternehmen:
+
+```sql
+SELECT MAX(salary) FROM employees;
+```
+
+4. Gesamtumsatz pro Monat:
+
+```sql
+SELECT SUM(amount) FROM sales WHERE sale_date BETWEEN '2023-01-01' AND '2023-01-31';
+```

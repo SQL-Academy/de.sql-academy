@@ -1,0 +1,27 @@
+---
+meta:
+    title: "Was ist ein Index und wie beeinflusst er die Performance?"
+    description: "Ein Index in SQL beschleunigt das Lesen von Daten, kann aber Schreiboperationen verlangsamen. Erfahre, wie sich Indizes auf die Performance auswirken und welche Vorteile sie bieten."
+---
+
+> Ein **Index** ist eine spezielle Datenstruktur, die das Lesen von Daten aus einer Tabelle beschleunigt, indem sie Verweise auf die Daten anlegt.
+
+Indizes beschleunigen Leseoperationen, können aber Schreiboperationen (Insert, Update, Delete) verlangsamen,
+da die Indizes bei jeder Datenänderung mit aktualisiert werden müssen.
+
+## Vorteile von Indizes:
+
+- Schnellere Ausführung von `SELECT`-Operationen.
+- Bessere Performance beim Sortieren und Suchen von Daten.
+
+## Nachteile von Indizes:
+
+- Zusätzlicher Speicherplatz auf der Platte.
+- Langsamere `INSERT`-, `UPDATE`- und `DELETE`-Operationen.
+
+## Beispiel für das Anlegen eines Index:
+
+```sql
+-- Index auf der Spalte name in der Tabelle employees anlegen
+CREATE INDEX idx_employees_name ON employees(name);
+```

@@ -1,0 +1,67 @@
+---
+meta:
+    title: "Wie führst du Backup und Restore einer Datenbank durch?"
+    description: "Backup und Restore einer Datenbank in MySQL und PostgreSQL mit den Tools mysqldump und pg_dump. Erfahre, wie du deine Daten mit regelmäßigen Backups absicherst."
+---
+
+Backup und Restore einer Datenbank sind kritische Aufgaben, um Daten zu sichern und
+sie im Fall eines Ausfalls oder Datenverlusts wiederherstellen zu können.
+
+## So legst du ein Backup einer Datenbank an:
+
+Die Backup-Methode hängt vom eingesetzten Datenbankmanagementsystem (DBMS) ab.
+
+Hier ein paar Beispiele für gängige Systeme.
+
+### MySQL
+
+Backup mit dem Tool `mysqldump`:
+
+```bash
+mysqldump -u username -p mydatabase > backup.sql
+```
+
+- `username` — der Benutzername der Datenbank.
+- `mydatabase` — der Name der zu sichernden Datenbank.
+- `backup.sql` — die Datei, in die das Backup geschrieben wird.
+
+### PostgreSQL
+
+Backup mit dem Tool `pg_dump`:
+
+```bash
+pg_dump -U username mydatabase > backup.sql
+```
+
+- `-U username` — der Benutzername der Datenbank.
+- `mydatabase` — der Name der Datenbank.
+- `backup.sql` — die Ausgabedatei des Backups.
+
+## So stellst du eine Datenbank aus einem Backup wieder her:
+
+### MySQL
+
+Restore aus der Datei `backup.sql`:
+
+```bash
+mysql -u username -p mydatabase < backup.sql
+```
+
+### PostgreSQL
+
+Restore mit dem Tool `psql`:
+
+```bash
+psql -U username mydatabase < backup.sql
+```
+
+## Empfehlungen
+
+- **Berechtigungen.**
+  Stelle sicher, dass du die nötigen Rechte für Backup- und Restore-Operationen hast.
+- **Regelmäßigkeit.**
+  Richte automatisierte, regelmäßige Backups ein, um das Risiko eines Datenverlusts zu minimieren.
+- **Aufbewahrung.**
+  Lagere Backups an einem sicheren und zuverlässigen Ort, am besten außerhalb des Hauptservers.
+- **Tests.**
+  Spiele Backups regelmäßig auf einem Testserver ein, um sicherzustellen, dass sie konsistent und nutzbar sind.

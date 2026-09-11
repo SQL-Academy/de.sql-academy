@@ -1,0 +1,79 @@
+---
+meta:
+    title: "Was sind Constraints und welche Arten gibt es?"
+    description: "Constraints in SQL sichern die Datenintegrität. Erfahre mehr über NOT NULL, UNIQUE, PRIMARY KEY, FOREIGN KEY, CHECK und DEFAULT für zuverlässige Daten in Tabellen."
+---
+
+**Constraints** sichern die Integrität und Zuverlässigkeit der Daten in einer Tabelle, indem sie Regeln für die Werte einzelner Spalten festlegen.
+
+Arten von Constraints:
+
+**NOT NULL:**
+
+- Verbietet `NULL`-Werte in der Spalte.
+
+Beispiel:
+
+```sql
+CREATE TABLE products (
+    product_id INT PRIMARY KEY,
+    name VARCHAR(100) NOT NULL
+);
+```
+
+**UNIQUE:**
+
+- Stellt sicher, dass die Werte in einer Spalte oder einer Gruppe von Spalten eindeutig sind.
+
+Beispiel:
+
+```sql
+CREATE TABLE users (
+    user_id INT PRIMARY KEY,
+    email VARCHAR(100) UNIQUE
+);
+```
+
+**PRIMARY KEY:**
+
+- Kombination aus `NOT NULL` und `UNIQUE`.
+- Identifiziert jeden Datensatz in der Tabelle eindeutig.
+
+**FOREIGN KEY:**
+
+- Stellt die referenzielle Integrität zwischen Tabellen sicher.
+- Der Wert muss einem existierenden Wert des Primary Keys in der referenzierten Tabelle entsprechen.
+
+Beispiel:
+
+```sql
+CREATE TABLE orders (
+    order_id INT PRIMARY KEY,
+    user_id INT,
+    FOREIGN KEY (user_id) REFERENCES users(user_id)
+);
+```
+
+**CHECK:**
+
+- Definiert eine Bedingung, die die Werte in einer Spalte erfüllen müssen.
+
+Beispiel:
+
+```sql
+CREATE TABLE employees (
+    id INT PRIMARY KEY,
+    age INT CHECK (age >= 18)
+);
+```
+
+**DEFAULT:**
+
+- Legt einen Standardwert für eine Spalte fest, wenn beim Einfügen kein Wert angegeben wird.
+
+```sql
+CREATE TABLE tasks (
+    task_id INT PRIMARY KEY,
+    status VARCHAR(20) DEFAULT 'Pending'
+);
+```

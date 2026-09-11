@@ -1,0 +1,52 @@
+---
+meta:
+    title: "Was ist eine Stored Procedure und wie unterscheidet sie sich von einer Funktion?"
+    description: "Eine Stored Procedure führt einen Satz von SQL-Befehlen aus, eine Funktion gibt einen Wert zurück und kann in Abfragen verwendet werden. Erfahre die wichtigsten Unterschiede."
+---
+
+## Stored Procedure:
+
+- Eine Menge von SQL-Befehlen, die auf dem Server zur Wiederverwendung gespeichert werden.
+- Kann `SELECT`-, `INSERT`-, `UPDATE`- und `DELETE`-Operationen ausführen.
+- Kann mehrere Ergebnismengen zurückgeben oder gar nichts.
+- Kann Eingangs- und Ausgangsparameter haben.
+- Kann nicht innerhalb einer SQL-Abfrage aufgerufen werden.
+
+Beispiel für eine Stored Procedure:
+
+```sql
+CREATE PROCEDURE GetEmployeeByID(IN emp_id INT)
+BEGIN
+    SELECT * FROM employees WHERE id = emp_id;
+END;
+```
+
+Aufruf der Prozedur:
+
+```sql
+CALL GetEmployeeByID(1);
+```
+
+## Funktion (Function):
+
+- Gibt einen einzelnen Wert (skalare Funktion) oder eine Tabelle (Tabellenfunktion) zurück.
+- Kann in SQL-Ausdrücken verwendet werden (z. B. in SELECT oder WHERE).
+- Muss einen Wert zurückgeben.
+- Wird üblicherweise für Berechnungen verwendet und liefert ein deterministisches Ergebnis.
+
+Beispiel für eine Funktion:
+
+```sql
+CREATE FUNCTION GetEmployeeSalary(emp_id INT) RETURNS DECIMAL(10,2)
+BEGIN
+    DECLARE salary DECIMAL(10,2);
+    SELECT e.salary INTO salary FROM employees e WHERE e.id = emp_id;
+    RETURN salary;
+END;
+```
+
+Verwendung der Funktion:
+
+```sql
+SELECT name, GetEmployeeSalary(id) FROM employees;
+```

@@ -1,0 +1,51 @@
+---
+meta:
+    title: "Erkläre die Unterschiede zwischen DELETE, TRUNCATE und DROP"
+    description: "DELETE entfernt ausgewählte Datensätze, TRUNCATE leert die gesamte Tabelle und behält die Struktur, DROP entfernt die Tabelle vollständig. Lerne die wichtigsten Unterschiede kennen."
+---
+
+## DELETE
+
+- Entfernt ausgewählte Datensätze aus einer Tabelle.
+- Mit `WHERE` kannst du gezielt einzelne Datensätze löschen.
+- Die Operation wird zeilenweise im Transaktionslog protokolliert.
+- `ON DELETE`-Trigger werden ausgelöst.
+
+### Syntax
+
+```sql
+DELETE FROM table_name [WHERE condition];
+```
+
+## TRUNCATE
+
+- Entfernt sämtliche Daten aus einer Tabelle, ohne Möglichkeit zur Wiederherstellung.
+- `WHERE` ist hier nicht erlaubt.
+- Deutlich schneller, da nicht jede gelöschte Zeile geloggt wird.
+- Setzt Auto-Increment-Werte zurück.
+- Trigger werden nicht ausgelöst.
+
+### Syntax
+
+```sql
+TRUNCATE TABLE table_name;
+```
+
+## DROP
+
+- Entfernt die komplette Tabelle samt Daten, Struktur, Indizes und Constraints.
+- Die Aktion ist unumkehrbar.
+
+### Syntax
+
+```sql
+DROP TABLE table_name;
+```
+
+## Wann welcher Befehl?
+
+- `DELETE` nutzt du, wenn du nur bestimmte Datensätze entfernen willst.
+- `TRUNCATE` ist die schnelle Variante, um alle Daten aus einer Tabelle zu entfernen, die Struktur aber zu behalten.
+- `DROP` setzt du ein, wenn die Tabelle komplett aus der Datenbank verschwinden soll.
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„TRUNCATE vs DELETE vs DROP: der Unterschied“](https://sql-academy.org/de/blog/sql-truncate-delete-drop).

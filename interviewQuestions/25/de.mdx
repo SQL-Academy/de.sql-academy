@@ -1,0 +1,41 @@
+---
+meta:
+    title: "Erkläre die Transaktionsbefehle COMMIT und ROLLBACK."
+    description: "COMMIT schreibt eine Transaktion endgültig fest, ROLLBACK macht die Änderungen rückgängig und stellt den Ausgangszustand wieder her. Erfahre, wie du Transaktionen steuerst."
+---
+
+## COMMIT
+
+- Schreibt die aktuelle Transaktion endgültig fest.
+- Alle Änderungen aus der Transaktion werden persistent und für andere Nutzer sichtbar.
+- Nach einem COMMIT lassen sich die Änderungen nicht mehr rückgängig machen.
+
+```sql
+BEGIN TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE account_id = 1;
+UPDATE accounts SET balance = balance + 100 WHERE account_id = 2;
+
+COMMIT;
+```
+
+## ROLLBACK
+
+- Bricht die aktuelle Transaktion ab.
+- Alle in der Transaktion vorgenommenen Änderungen werden zurückgerollt.
+- Die Datenbank kehrt in den Zustand vor Beginn der Transaktion zurück.
+
+```sql
+BEGIN TRANSACTION;
+
+DELETE FROM orders WHERE order_date < '2022-01-01';
+
+-- Falls du es dir anders überlegt hast
+ROLLBACK;
+```
+
+## Einsatz beim Transaktionsmanagement:
+
+- `BEGIN TRANSACTION` oder `START TRANSACTION`: Beginn einer Transaktion.
+- `COMMIT`: Festschreiben der Transaktion.
+- `ROLLBACK`: Zurückrollen der Transaktion.

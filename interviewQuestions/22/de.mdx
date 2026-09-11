@@ -1,0 +1,61 @@
+---
+meta:
+    title: "Erkläre den Unterschied zwischen INNER JOIN und OUTER JOIN"
+    description: "INNER JOIN liefert nur passende Datensätze aus beiden Tabellen, während OUTER JOIN auch Datensätze ohne Treffer einschließt. Lerne die wichtigsten Unterschiede kennen."
+---
+
+## INNER JOIN:
+
+- Liefert nur die Datensätze, für die es in beiden verknüpften Tabellen einen Treffer gibt.
+- Gibt es keinen Treffer, taucht der Datensatz nicht im Ergebnis auf.
+
+Beispiel:
+
+```sql
+SELECT *
+FROM employees e
+INNER JOIN departments d ON e.department_id = d.id;
+```
+
+## OUTER JOIN:
+
+- Liefert sowohl Datensätze mit Treffer als auch Datensätze aus einer der Tabellen, für die es keinen passenden Eintrag gibt.
+
+### Arten von OUTER JOIN:
+
+**LEFT OUTER JOIN (LEFT JOIN):**
+
+- Liefert alle Datensätze aus der linken Tabelle und die passenden Datensätze aus der rechten Tabelle.
+- Gibt es keinen Treffer, sind die Spalten der rechten Tabelle `NULL`.
+
+Beispiel:
+
+```sql
+SELECT *
+FROM employees e
+LEFT JOIN departments d ON e.department_id = d.id;
+```
+
+**RIGHT OUTER JOIN (RIGHT JOIN):**
+
+- Liefert alle Datensätze aus der rechten Tabelle und die passenden Datensätze aus der linken Tabelle.
+- Gibt es keinen Treffer, sind die Spalten der linken Tabelle `NULL`.
+
+Beispiel:
+
+```sql
+SELECT *
+FROM employees e
+RIGHT JOIN departments d ON e.department_id = d.id;
+```
+
+**FULL OUTER JOIN (FULL JOIN):**
+
+- Liefert alle Datensätze, sobald es in einer der Tabellen einen Treffer gibt.
+- Fehlt der Treffer auf der jeweils anderen Seite, sind die entsprechenden Spalten `NULL`.
+
+```sql
+SELECT *
+FROM employees e
+FULL OUTER JOIN departments d ON e.department_id = d.id;
+```

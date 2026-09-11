@@ -1,0 +1,36 @@
+---
+meta:
+    title: "Was ist ein Self-Join und wann wird er eingesetzt?"
+    description: "Ein Self-Join verknüpft in SQL eine Tabelle mit sich selbst. Das ist praktisch für Hierarchien und Zeilenvergleiche. Erfahre, wann und wie du einen Self-Join einsetzt."
+---
+
+> **Ein Self-Join** ist ein Join-Typ in SQL, bei dem eine Tabelle mit sich selbst verknüpft wird.
+> Das ist nützlich, wenn du Zeilen derselben Tabelle miteinander vergleichen oder hierarchische Daten verarbeiten möchtest.
+
+## Wann ein Self-Join Sinn ergibt:
+
+- **Hierarchische Strukturen.**
+  Etwa eine Mitarbeitertabelle, in der jeder Mitarbeitende eine Managerin oder einen Manager haben kann,
+  die selbst wieder ein Eintrag in derselben Tabelle sind.
+- **Datensätze vergleichen.**
+  Zum Aufspüren von Duplikaten oder zum Vergleichen von Werten zwischen Zeilen derselben Tabelle.
+
+## Beispiel
+
+| employeeId | name    | managerId |
+| ---------- | ------- | --------- |
+| 1          | John    | null      |
+| 2          | Michail | 1         |
+| 3          | Alisa   | 1         |
+| 4          | Max     | 2         |
+
+Um eine Liste der Mitarbeitenden samt zugehörigem Manager zu erhalten:
+
+```sql
+SELECT e.name AS Employee, m.name AS Manager
+FROM Employee e
+LEFT JOIN Employee m ON e.managerId = m.employeeId;
+```
+
+In dieser Query verknüpfen wir die Tabelle `Employee` mit sich selbst,
+um jedem Mitarbeitenden den passenden Manager zuzuordnen.

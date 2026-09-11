@@ -1,0 +1,48 @@
+---
+meta:
+    title: "Wie funktionieren die Befehle REVOKE und GRANT?"
+    description: "Mit GRANT und REVOKE steuerst du in SQL die Zugriffsrechte auf Datenbankobjekte. Erfahre anhand von Beispielen, wie du Privilegien vergibst und wieder entziehst."
+---
+
+Die Befehle `GRANT` und `REVOKE` dienen in SQL dazu, die Zugriffsrechte von Benutzern
+auf Datenbankobjekte zu steuern.
+Damit erteilst oder entziehst du Benutzern oder Rollen bestimmte Privilegien und sorgst so für Sicherheit und Kontrolle darüber, wer welche Aktionen in der Datenbank ausführen darf.
+
+## GRANT
+
+Mit `GRANT` weist du Benutzern oder Rollen bestimmte Privilegien auf Datenbankobjekte zu.
+
+### Syntax:
+
+```sql
+GRANT privileges ON object TO user [WITH GRANT OPTION];
+```
+
+- `privileges`: die erlaubten Aktionen (z. B. SELECT, INSERT, UPDATE, DELETE, ALL PRIVILEGES).
+- `object`: Datenbank, Tabelle, View, Prozedur usw.
+- `user`: Name des Benutzers oder der Rolle, der die Rechte zugewiesen werden.
+- `WITH GRANT OPTION` (optional): erlaubt es dem Empfänger, die Privilegien an andere weiterzugeben.
+
+**Beispiel:**
+So gibst du dem Benutzer `user1` das Recht, Daten aus der Tabelle `employees` zu lesen:
+
+```sql
+GRANT SELECT ON employees TO user1;
+```
+
+## REVOKE
+
+Mit `REVOKE` ziehst du zuvor erteilte Privilegien von Benutzern oder Rollen wieder ein.
+
+### Syntax:
+
+```sql
+REVOKE privileges ON object FROM user;
+```
+
+**Beispiel:**
+So entziehst du `user1` das Recht, aus der Tabelle `employees` zu lesen:
+
+```sql
+REVOKE SELECT ON employees FROM user1;
+```
