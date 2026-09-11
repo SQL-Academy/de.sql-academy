@@ -1,0 +1,78 @@
+---
+meta:
+    title: "Wie funktioniert ein SQL-Trigger?"
+    description: "Ein SQL-Trigger ist eine Stored Procedure, die automatisch bei INSERT-, UPDATE- oder DELETE-Events ausgeführt wird. Erfahre, wie du Trigger für Logging und Datenintegrität nutzt."
+---
+
+## Was ist ein SQL-Trigger
+
+> **Ein SQL-Trigger** ist ein Datenbankobjekt — eine spezielle Form einer Stored Procedure,
+> die automatisch ausgeführt wird, sobald in der Datenbank ein bestimmtes Ereignis eintritt.
+> Solche Ereignisse können `INSERT`-, `UPDATE`- oder `DELETE`-Operationen auf Tabellen oder Views sein.
+
+## Wie ein SQL-Trigger funktioniert
+
+Ein Trigger wird automatisch aktiviert, sobald das definierte Ereignis eintritt (zum Beispiel das Einfügen eines neuen Datensatzes in eine Tabelle).
+
+### Trigger-Typen
+
+- `BEFORE`: Wird vor der eigentlichen Operation ausgelöst.
+  Praktisch, um Daten vor dem Speichern zu prüfen oder zu verändern.
+- `AFTER`: Wird nach der Operation ausgelöst.
+  Häufig im Einsatz für Logging oder zum Aktualisieren verknüpfter Tabellen.
+- `INSTEAD OF`: Ersetzt das Standardverhalten der Operation.
+  Nützlich, wenn du das Default-Verhalten überschreiben willst — zum Beispiel bei Views.
+
+Innerhalb eines Triggers kannst du über die speziellen Pseudo-Tabellen `OLD` und `NEW` auf die alten und neuen Werte zugreifen.
+
+## Beispiel für einen Trigger
+
+Du hast eine Tabelle `Employees` und möchtest die Gehaltshistorie der Mitarbeitenden bei jeder Änderung automatisch in einer Tabelle `SalaryHistory` festhalten.
+
+**Tabellen anlegen:**
+
+```sql
+-- Tabelle der Mitarbeitenden
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    Salary DECIMAL(10, 2)
+);
+
+-- Tabelle für die Gehaltshistorie
+CREATE TABLE SalaryHistory (
+    EmployeeID INT,
+    OldSalary DECIMAL(10, 2),
+    NewSalary DECIMAL(10, 2),
+    ChangeDate DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+```
+
+**Trigger anlegen:**
+
+```sql
+DELIMITER $$
+
+CREATE TRIGGER trg_AfterSalaryUpdate
+AFTER UPDATE ON Employees
+FOR EACH ROW
+BEGIN
+    IF OLD.Salary <> NEW.Salary THEN
+        INSERT INTO SalaryHistory (EmployeeID, OldSalary, NewSalary)
+        VALUES (NEW.EmployeeID, OLD.Salary, NEW.Salary);
+    END IF;
+END$$
+
+DELIMITER ;
+```
+
+## Wann du Trigger einsetzen solltest
+
+- **Logging und Audit:**
+  Datenänderungen automatisch protokollieren, um Benutzeraktionen nachzuvollziehen.
+- **Datenintegrität:**
+  Komplexe Geschäftsregeln durchsetzen, die sich mit reinen Constraints nicht abbilden lassen.
+- **Datensynchronisation:**
+  Verknüpfte Tabellen automatisch aktualisieren, wenn sich Daten ändern.
+- **Werte berechnen:**
+  Aggregierte oder abgeleitete Werte automatisch berechnen und auf dem neuesten Stand halten.

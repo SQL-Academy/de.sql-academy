@@ -1,0 +1,35 @@
+---
+meta:
+    title: "Was sind Primary Key und Foreign Key?"
+    description: "Der Primary Key ist der eindeutige Identifikator eines Datensatzes, der Foreign Key verknüpft Tabellen und sichert die Datenintegrität in der Datenbank."
+---
+
+## Primary Key (PRIMARY KEY):
+
+- Eindeutiger Identifikator eines Datensatzes in einer Tabelle.
+- Erlaubt keine Duplikate und keine `NULL`-Werte.
+- Kann aus einer oder mehreren Spalten bestehen (zusammengesetzter Schlüssel).
+
+```sql
+CREATE TABLE students (
+    student_id INT PRIMARY KEY,
+    name VARCHAR(100),
+    age INT
+);
+```
+
+## Foreign Key (FOREIGN KEY):
+
+- Eine Spalte oder eine Gruppe von Spalten, die auf den Primary Key einer anderen Tabelle verweisen.
+- Stellt die referenzielle Integrität zwischen Tabellen sicher.
+- Erlaubt es, Datensätze aus verschiedenen Tabellen zu verknüpfen.
+
+```sql
+CREATE TABLE enrollments (
+    enrollment_id INT PRIMARY KEY,
+    student_id INT,
+    course_id INT,
+    FOREIGN KEY (student_id) REFERENCES students(student_id),
+    FOREIGN KEY (course_id) REFERENCES courses(course_id)
+);
+```

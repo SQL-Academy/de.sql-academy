@@ -1,0 +1,31 @@
+---
+meta:
+    title: "Was ist eine Transaktion und welche Eigenschaften hat sie (ACID)?"
+    description: "Eine Transaktion in SQL ist eine Folge von Operationen mit den ACID-Eigenschaften: Atomarität, Konsistenz, Isolation und Dauerhaftigkeit. Erfahre, was diese bedeuten."
+---
+
+> Eine **Transaktion** ist eine Folge von Operationen, die als eine logische Einheit ausgeführt werden — entweder vollständig oder gar nicht.
+
+## Eigenschaften von Transaktionen (ACID):
+
+**Atomarität (Atomicity):**
+
+- Eine Transaktion wird entweder vollständig ausgeführt oder gar nicht.
+- Tritt ein Fehler auf, werden alle Änderungen rückgängig gemacht.
+
+**Konsistenz (Consistency):**
+
+- Eine Transaktion überführt die Datenbank von einem konsistenten Zustand in einen anderen.
+- Alle Regeln und Constraints der Datenbank bleiben dabei eingehalten.
+
+**Isolation (Isolation):**
+
+- Die Ergebnisse einer Transaktion sind für andere Transaktionen erst nach deren Abschluss sichtbar.
+- So wird die gegenseitige Beeinflussung paralleler Transaktionen verhindert.
+
+**Dauerhaftigkeit (Durability):**
+
+- Nach erfolgreichem Abschluss bleiben die Ergebnisse einer Transaktion auch bei Systemausfällen erhalten.
+- Änderungen werden in einen persistenten Speicher geschrieben.
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„Was ist ACID: die 4 Transaktionseigenschaften erklärt“](https://sql-academy.org/de/blog/sql-acid).

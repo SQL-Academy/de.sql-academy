@@ -1,0 +1,32 @@
+---
+meta:
+    title: "Was ist eine korrelierte Subquery?"
+    description: "Eine korrelierte Subquery wird in SQL für jede Zeile der äußeren Query ausgeführt und verwendet deren Werte. Erfahre, wann und wie du korrelierte Subqueries einsetzt."
+---
+
+> **Eine korrelierte Subquery** ist eine Subquery, die von der äußeren Query abhängt.
+> Sie wird für jede Zeile der äußeren Query erneut ausgeführt und nutzt dabei die Werte aus dieser Zeile.
+
+## Besonderheiten
+
+- Die Subquery referenziert Spalten aus der äußeren Query.
+- Sie kann durch die wiederholte Ausführung weniger performant sein.
+
+## Beispiel
+
+Es gibt die Tabellen `employees` und `departments`.
+
+```sql
+SELECT e.name, e.salary
+FROM employees e
+WHERE e.salary > (
+    SELECT AVG(salary)
+    FROM employees
+    WHERE department_id = e.department_id
+);
+```
+
+- Die Subquery berechnet das Durchschnittsgehalt der Abteilung jedes Mitarbeitenden.
+- Die Hauptquery liefert die Mitarbeitenden, deren Gehalt über dem Durchschnitt ihrer Abteilung liegt.
+
+Mehr Infos zu korrelierten Subqueries findest du <a href="https://sql-academy.org/de/guide/correlated-subqueries" target="_blank">in unserem Kurs</a>.

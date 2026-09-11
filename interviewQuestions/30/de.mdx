@@ -1,0 +1,18 @@
+---
+meta:
+    title: "Wie löscht man eine Tabelle samt ihrer Daten?"
+    description: "Der Befehl DROP TABLE entfernt in SQL eine Tabelle samt Daten, Indizes und Triggern. Erfahre, wie du DROP TABLE einsetzt und worauf du achten musst."
+---
+
+Dafür gibt es den Befehl `DROP TABLE`. Er entfernt die Tabelle samt aller darin gespeicherten Daten aus der Datenbank.
+
+## Syntax
+
+```sql
+DROP TABLE table_name;
+```
+
+## Wichtige Hinweise:
+
+- Alle Daten, Indizes, Trigger und Berechtigungen, die zur Tabelle gehören, werden entfernt.
+- Die Aktion ist unumkehrbar, sofern kein Backup oder ein Wiederherstellungsmechanismus eingerichtet ist.

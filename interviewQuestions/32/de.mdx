@@ -1,0 +1,34 @@
+---
+meta:
+    title: "Wie fügt man einer bestehenden Tabelle eine neue Spalte hinzu?"
+    description: "Mit ALTER TABLE und dem Operator ADD fügst du einer bestehenden Tabelle eine neue Spalte hinzu. Erfahre, wie du dabei Datentyp und Constraints angibst."
+---
+
+Dafür nutzt du den Befehl `ALTER TABLE` zusammen mit dem Operator `ADD`, um der Tabelle eine neue Spalte hinzuzufügen.
+
+## Syntax
+
+```sql
+ALTER TABLE table_name
+ADD column_name data_type [constraints];
+```
+
+## Beispiel
+
+Angenommen, es gibt eine Tabelle `employees`, und du möchtest die Spalte `email` vom Typ `VARCHAR(255)` ergänzen.
+
+```sql
+ALTER TABLE employees
+ADD email VARCHAR(255);
+```
+
+Spalte mit `NOT NULL`-Constraint und Default-Wert hinzufügen:
+
+```sql
+ALTER TABLE employees
+ADD date_of_birth DATE NOT NULL DEFAULT '1900-01-01';
+```
+
+**Wichtig:**
+Wenn du eine Spalte mit `NOT NULL`-Constraint ergänzt und die Tabelle bereits Daten enthält,
+musst du einen Default-Wert angeben, sonst bekommst du einen Fehler.

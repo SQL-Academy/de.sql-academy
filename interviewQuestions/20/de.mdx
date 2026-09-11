@@ -1,0 +1,50 @@
+---
+meta:
+    title: "Was ist eine SQL-Injection und wie schützt man sich davor?"
+    description: "Eine SQL-Injection ist eine Angriffsmethode auf Datenbanken. Erfahre, wie du dich mit Prepared Statements, ORM, Datenvalidierung und eingeschränkten Zugriffsrechten schützt."
+---
+
+> Eine **SQL-Injection** ist eine Angriffsmethode auf eine Datenbank, bei der ein Angreifer
+> über Eingabefelder schädlichen SQL-Code einschleust und so nicht autorisierte SQL-Abfragen ausführen kann.
+
+## Folgen einer SQL-Injection:
+
+- Diebstahl von Daten.
+- Löschen oder Verändern von Daten.
+- Erlangen administrativer Zugriffsrechte.
+
+## Schutz vor SQL-Injections:
+
+**1. Prepared Statements (parametrisierte Abfragen):**
+
+- Verwende Parameter statt String-Konkatenation.
+- Das DBMS escapt Sonderzeichen automatisch.
+
+Beispiel (in Java mit JDBC)
+
+```java
+String sql = "SELECT * FROM users WHERE username = ? AND password = ?";
+PreparedStatement stmt = connection.prepareStatement(sql);
+stmt.setString(1, username);
+stmt.setString(2, password);
+ResultSet rs = stmt.executeQuery();
+```
+
+**2. ORM (Object-Relational Mapping) einsetzen:**
+
+- ORM-Bibliotheken bringen häufig schon Schutzmechanismen gegen SQL-Injections mit.
+
+**3. Eingabedaten prüfen und filtern:**
+
+- Prüfe Daten auf das erwartete Format.
+- Setze Validierung auf Server- und Client-Seite ein.
+
+**4. Zugriffsrechte einschränken:**
+
+- Vergib Datenbanknutzern nur die minimal nötigen Rechte.
+- Beschränke den Zugriff auf Systemtabellen und sensible Operationen.
+
+**5. Stored Procedures verwenden:**
+
+- Die Datenlogik ist in der Prozedur gekapselt.
+- Nutzer greifen nur auf die Prozeduren zu, nicht direkt auf die Tabellen.

@@ -1,0 +1,29 @@
+---
+meta:
+    title: "Was ist ein FOREIGN KEY und wie sichert er die Datenintegrität?"
+    description: "Ein FOREIGN KEY stellt in SQL eine Beziehung zwischen Tabellen her und sichert die Datenintegrität, indem er garantiert, dass Fremdschlüsselwerte zu existierenden Einträgen passen."
+---
+
+> **Ein FOREIGN KEY** ist ein Constraint, das eine Beziehung zwischen einer Spalte oder
+> einer Spaltengruppe einer Tabelle und einer Spalte (bzw. Spalten) einer anderen Tabelle herstellt — in der Regel zum Primary Key der anderen Tabelle.
+
+Er sorgt für referenzielle Integrität, indem er sicherstellt, dass die Werte in der Fremdschlüssel-Spalte zu vorhandenen Werten in der referenzierten Tabelle passen.
+
+## So wird die Datenintegrität gewahrt:
+
+- **Einfügen ungültiger Daten wird verhindert.**
+  Es ist nicht möglich, einen Wert in die Fremdschlüssel-Spalte einzutragen, wenn es diesen Wert in der referenzierten Tabelle nicht gibt.
+
+- **Löschen verknüpfter Datensätze wird eingeschränkt.**
+  Ein Datensatz in der übergeordneten Tabelle kann nicht einfach gelöscht werden, solange ihn Datensätze der untergeordneten Tabelle referenzieren — dafür braucht es zusätzliche Regeln.
+
+### Beispiel für einen Foreign Key:
+
+```sql
+CREATE TABLE Employees (
+    EmployeeID INT PRIMARY KEY,
+    Name VARCHAR(100),
+    DepartmentID INT,
+    FOREIGN KEY (DepartmentID) REFERENCES Departments(DepartmentID)
+);
+```

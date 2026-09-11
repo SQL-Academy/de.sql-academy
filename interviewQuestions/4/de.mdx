@@ -1,0 +1,52 @@
+---
+meta:
+    title: "Erkläre das Konzept der Normalisierung und ihre Vorteile"
+    description: "Normalisierung in SQL reduziert Datenredundanz und verbessert die Integrität der Datenbank. Erfahre mehr über Normalformen und die Vorteile dieses Prozesses."
+---
+
+> Normalisierung ist der Prozess, die Struktur einer Datenbank so zu organisieren, dass Datenredundanz reduziert und die Datenintegrität sichergestellt wird.
+
+## Hauptziele der Normalisierung:
+
+- Vermeidung von Redundanz: verhindert das Duplizieren von Daten.
+- Höhere Datenintegrität: minimiert die Wahrscheinlichkeit inkonsistenter Daten.
+- Einfachere Wartung und Aktualisierung: macht die Struktur der Datenbank flexibler und verständlicher.
+
+## Wichtigste Normalformen
+
+- Erste Normalform (1NF): alle Spalten enthalten atomare (unteilbare) Werte.
+- Zweite Normalform (2NF): erfüllt 1NF und alle Nichtschlüssel-Spalten hängen vom gesamten Primary Key ab.
+- Dritte Normalform (3NF): erfüllt 2NF und es gibt keine transitiven Abhängigkeiten zwischen Nichtschlüssel-Spalten.
+
+## Beispiel
+
+**Vor der Normalisierung:**
+
+| StudentID | StudentName | CourseID | CourseName |
+| --------- | ----------- | -------- | ---------- |
+| 1         | John        | 101      | Math       |
+| 1         | John        | 102      | Music      |
+
+**Nach der Normalisierung:**
+
+Tabelle Students
+
+| StudentID | StudentName |
+| --------- | ----------- |
+| 1         | John        |
+
+Tabelle Courses
+
+| CourseID | CourseName |
+| -------- | ---------- |
+| 101      | Math       |
+| 102      | Music      |
+
+Tabelle Enrollments
+
+| StudentID | CourseID |
+| --------- | -------- |
+| 1         | 101      |
+| 1         | 102      |
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„Normalisierung von Datenbanken: Normalformen einfach erklärt“](https://sql-academy.org/de/blog/database-normalization).

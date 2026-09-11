@@ -1,0 +1,38 @@
+---
+meta:
+    title: "Wie optimiert man die Performance von SQL-Abfragen?"
+    description: "Zur Optimierung von SQL-Abfragen gehört der Einsatz von Indizes, das Vermeiden von SELECT *, das Optimieren von JOIN und WHERE, das Begrenzen der Ergebnisse und die Analyse des Ausführungsplans."
+---
+
+**Indizes einsetzen:**
+
+- Lege Indizes auf Spalten an, die häufig in `WHERE`, `JOIN` und `ORDER BY` vorkommen.
+- Vermeide überflüssige Indizes.
+
+**`SELECT *` vermeiden:**
+
+- Wähle nur die Spalten aus, die du wirklich brauchst.
+- Das reduziert die übertragene Datenmenge.
+
+**Bedingungen in `JOIN` und `WHERE` optimieren:**
+
+- Verwende wo möglich Gleichheit (=) statt Ungleichheit.
+- Vermeide Funktionen und Berechnungen auf indexierten Spalten innerhalb der Bedingungen.
+
+**Ergebnisse begrenzen (`LIMIT`):**
+
+- Begrenze die Anzahl der zurückgegebenen Zeilen, wenn du nicht alle Daten brauchst.
+
+**Subqueries vermeiden, wenn ein Join möglich ist:**
+
+- Ersetze korrelierte Subqueries durch `JOIN` oder `EXISTS`.
+
+**Häufig genutzte Daten cachen:**
+
+- Nutze materialisierte Views oder Caching auf Anwendungsebene.
+
+**Abfragen profilen und analysieren:**
+
+- Verwende Tools (`EXPLAIN`, `EXPLAIN PLAN`), um den Ausführungsplan der Abfragen zu analysieren.
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„SQL-Abfragen optimieren: 10 Wege zu schnelleren Abfragen“](https://sql-academy.org/de/blog/sql-query-optimization).

@@ -1,0 +1,31 @@
+---
+meta:
+    title: "Wie verwendet man den LIKE-Operator und wofür dient er?"
+    description: "Der LIKE-Operator in SQL dient zur Suche nach Strings anhand eines Musters mit den Zeichen % und _. Erfahre, wie du LIKE zum Filtern von Daten einsetzt."
+---
+
+Der `LIKE`-Operator wird in `WHERE`-Bedingungen verwendet, um Strings zu finden, die einem bestimmten Muster entsprechen.
+In den Mustern kommen Platzhalter zum Einsatz:
+
+- `%` — entspricht einer beliebigen Zeichenfolge (auch der Länge null).
+- `_` — entspricht einem einzelnen beliebigen Zeichen.
+
+## Anwendungsbeispiele:
+
+1. Strings finden, die mit „A“ beginnen:
+
+```sql
+SELECT * FROM employees WHERE name LIKE 'A%';
+```
+
+2. Strings finden, die mit „e“ enden:
+
+```sql
+SELECT * FROM employees WHERE name LIKE '%e';
+```
+
+3. Strings finden, bei denen das zweite Zeichen „a“ ist:
+
+```sql
+SELECT * FROM employees WHERE name LIKE '_a%';
+```

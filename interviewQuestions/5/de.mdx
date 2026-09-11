@@ -1,0 +1,24 @@
+---
+meta:
+    title: "Was ist JOIN und welche JOIN-Arten kennst du?"
+    description: "JOIN in SQL kombiniert Daten aus mehreren Tabellen. Erfahre mehr über die JOIN-Arten: INNER, LEFT, RIGHT, FULL und CROSS JOIN für effiziente Arbeit mit Datenbanken."
+---
+
+> JOIN ist eine Operation in SQL, mit der du Zeilen aus zwei oder mehr Tabellen anhand verknüpfter Spalten zusammenführen kannst.
+
+## JOIN-Arten:
+
+- `INNER JOIN`:\
+  Gibt Datensätze zurück, für die in beiden Tabellen passende Einträge existieren.
+
+- `LEFT JOIN (oder LEFT OUTER JOIN)`:\
+  Gibt alle Datensätze aus der linken Tabelle und die passenden Datensätze aus der rechten Tabelle zurück. Gibt es keine Entsprechung, wird `NULL` für die rechte Tabelle zurückgegeben.
+
+- `RIGHT JOIN (oder RIGHT OUTER JOIN)`:\
+  Gibt alle Datensätze aus der rechten Tabelle und die passenden Datensätze aus der linken Tabelle zurück. Gibt es keine Entsprechung, wird `NULL` für die linke Tabelle zurückgegeben.
+
+- `FULL OUTER JOIN`:\
+  Gibt alle Datensätze zurück, sobald es in einer der Tabellen eine Entsprechung gibt.
+
+- `CROSS JOIN`:\
+  Bildet das kartesische Produkt zweier Tabellen, indem jede Zeile der ersten Tabelle mit jeder Zeile der zweiten Tabelle kombiniert wird.

@@ -1,0 +1,47 @@
+---
+meta:
+    title: "Erkläre die Unterschiede zwischen CHAR und VARCHAR"
+    description: "CHAR speichert Strings fester Länge, VARCHAR Strings variabler Länge. Erfahre, wann du je nach Daten und Speicherbedarf zu CHAR oder VARCHAR greifst."
+---
+
+## CHAR(n):
+
+- Speichert Strings mit fester Länge `n`.
+- Ist die eingegebene Zeichenkette kürzer als `n`, wird sie mit Leerzeichen auf `n` aufgefüllt.
+- Geeignet für Daten gleicher Länge (z. B. Ländercodes, Postleitzahlen).
+
+## VARCHAR(n):
+
+- Speichert Strings variabler Länge mit bis zu `n` Zeichen.
+- Belegt tatsächlich nur so viel Platz, wie der String Zeichen hat, plus einen kleinen Overhead für die Längenangabe.
+- Geeignet für Daten mit variabler Länge.
+
+## Wichtigste Unterschiede:
+
+Speicher und Performance:
+
+- `CHAR` belegt immer eine feste Menge an Speicher.
+- `VARCHAR` ist beim Speicherverbrauch effizienter, kann aber beim Zugriff einen Hauch langsamer sein.
+
+Einsatzgebiete:
+
+- `CHAR` ist gut für Daten mit vorhersagbarer Länge geeignet.
+- `VARCHAR` ist gut für Daten mit variabler Länge geeignet.
+
+Beispiel:
+
+```sql
+CREATE TABLE products (
+    code CHAR(10),     -- Produktcode mit fester Länge
+    name VARCHAR(100)  -- Produktname mit variabler Länge
+);
+```
+
+Daten einfügen:
+
+```sql
+INSERT INTO products (code, name)
+VALUES ('A123', 'Lenovo Notebook');
+```
+
+In der Spalte `code` wird der Wert mit Leerzeichen auf 10 Zeichen aufgefüllt.

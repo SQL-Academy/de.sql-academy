@@ -1,0 +1,35 @@
+---
+meta:
+    title: "Erkläre den Unterschied zwischen WHERE und HAVING"
+    description: "Unterschied zwischen WHERE und HAVING in SQL: WHERE filtert Daten vor der Gruppierung, HAVING danach. Erfahre, wann und wie du diese Operatoren einsetzt."
+---
+
+## WHERE
+
+- Filtert Zeilen **vor** der Gruppierung der Daten.
+- Kann keine Aggregatfunktionen (`SUM()`, `COUNT()`, `AVG()` usw.) verwenden.
+- Wirkt auf einzelne Datensätze der Tabelle.
+
+Beispiel:
+
+```sql
+SELECT department_id, COUNT(*)
+FROM employees
+WHERE salary > 50000
+GROUP BY department_id;
+```
+
+## HAVING
+
+- Filtert Zeilengruppen nach der Gruppierung der Daten.
+- Kann Aggregatfunktionen verwenden.
+- Wirkt auf die Ergebnisse von `GROUP BY`.
+
+Beispiel:
+
+```sql
+SELECT department_id, COUNT(*) AS num_employees
+FROM employees
+GROUP BY department_id
+HAVING COUNT(*) > 5;
+```

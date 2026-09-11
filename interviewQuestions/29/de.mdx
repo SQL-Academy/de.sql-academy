@@ -1,0 +1,31 @@
+---
+meta:
+    title: "Erkläre das Konzept der CTE (Common Table Expression)"
+    description: "Eine CTE (Common Table Expression) ist ein temporäres benanntes Ergebnis, das die Lesbarkeit und Struktur komplexer SQL-Queries verbessert. Erfahre, wie du CTEs einsetzt und welche Vorteile sie bieten."
+---
+
+> **Eine CTE (Common Table Expression)** ist eine temporäre, benannte Ergebnismenge,
+> die innerhalb einer SQL-Query mit dem Schlüsselwort `WITH` definiert wird.
+
+Sie verbessert die Lesbarkeit und die Struktur komplexer Queries.
+
+## Syntax
+
+```sql
+WITH CTEName (column1, column2, ...)
+AS (
+    -- Deine Query
+    SELECT ...
+)
+SELECT * FROM CTEName;
+```
+
+## Vorteile von CTEs
+
+- Verbessert die Lesbarkeit des Codes.
+- Erlaubt es, komplexe Queries in logische Teile zu zerlegen.
+- Unterstützt rekursive Queries (rekursive CTEs).
+
+Eine ausführliche Erklärung zur Funktionsweise von CTEs findest du <a href="https://sql-academy.org/de/guide/operator-with" target="_blank">in unserem Kurs</a>.
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„CTE in SQL: Was eine Common Table Expression ist — mit Rekursion“](https://sql-academy.org/de/blog/sql-cte).

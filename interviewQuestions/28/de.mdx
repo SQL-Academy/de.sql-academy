@@ -1,0 +1,35 @@
+---
+meta:
+    title: "Was sind Window-Funktionen in SQL?"
+    description: "Window-Funktionen in SQL erlauben Berechnungen über eine Menge von Zeilen ohne Gruppierung. Lerne SUM, ROW_NUMBER, LAG und weitere Window-Funktionen kennen."
+---
+
+> **Window-Funktionen** sind Funktionen, die eine Berechnung über eine Menge
+> von Zeilen (das "Fenster") ausführen, die mit der aktuellen Zeile zusammenhängen, und für jede Zeile ein Ergebnis liefern, ohne die Daten zu gruppieren.
+
+## Wichtige Window-Funktionen:
+
+### Aggregatfunktionen:
+
+- `SUM` — berechnet die Gesamtsumme der Werte
+- `COUNT` — zählt die Anzahl der Einträge in einer Spalte
+- `AVG` — berechnet den arithmetischen Mittelwert
+- `MAX` — findet den größten Wert
+- `MIN` — findet den kleinsten Wert
+
+### Ranking-Funktionen:
+
+- `ROW_NUMBER`: vergibt eine fortlaufende Nummer pro Zeile innerhalb des Fensters
+- `RANK`: vergibt einen Rang innerhalb des Fensters und überspringt Ränge bei gleichen Werten
+- `DENSE_RANK`: vergibt einen Rang ohne Lücken
+
+### Versatz-Funktionen:
+
+- `LAG`: liefert den Wert aus der vorherigen Zeile
+- `LEAD`: liefert den Wert aus der nächsten Zeile
+- `FIRST_VALUE`: liefert den ersten Wert im Fenster
+- `LAST_VALUE`: liefert den letzten Wert im Fenster
+
+Eine ausführliche Erklärung zur Funktionsweise von Window-Funktionen findest du <a href="https://sql-academy.org/de/guide/windows-functions" target="_blank">in unserem Kurs</a>.
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„ROW_NUMBER vs RANK vs DENSE_RANK: der Unterschied an einem Beispiel“](https://sql-academy.org/de/blog/row-number-rank-dense-rank).

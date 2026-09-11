@@ -1,0 +1,61 @@
+---
+meta:
+    title: "Erkläre den Einsatz von Hash-Funktionen in SQL"
+    description: "Hash-Funktionen wandeln in SQL Eingabedaten in feste Strings um — für Sicherheit und Integrität. Erfahre, wie du Hashes für Passwortspeicherung und schnellere Suchen einsetzt."
+---
+
+Hash-Funktionen werden in SQL eingesetzt, um Eingabedaten beliebiger Länge in einen String fester Länge umzuwandeln.
+Diesen Vorgang nennt man **Hashing**. Er wird breit eingesetzt, um Sicherheit zu erhöhen, Datenintegrität sicherzustellen und Vergleichs- bzw. Suchoperationen zu beschleunigen.
+
+## Wichtige Einsatzbereiche für Hash-Funktionen in SQL:
+
+### 1. Speichern von Passwörtern
+
+- Statt Passwörter im Klartext zu speichern, legst du sie als Hash ab. Das erhöht die Sicherheit deutlich: Selbst wenn die Datenbank kompromittiert wird, lassen sich die Originalpasswörter nicht wiederherstellen.
+- Eingesetzt werden kryptografische Hash-Funktionen wie `SHA-256` oder `SHA-512`.
+
+### 2. Prüfung der Datenintegrität
+
+Mit Hash-Funktionen kannst du erkennen, ob Daten verändert wurden. Du bildest einen Hash über die Originaldaten und vergleichst ihn mit dem aktuellen Hash — passt etwas nicht, hat sich etwas geändert.
+
+### 3. Indexierung und schnellere Suche
+
+Hash-Werte eignen sich gut, um große Datenmengen schnell zu vergleichen oder Indizes für eine performantere Suche aufzubauen.
+
+### 4. Eindeutige IDs erzeugen:
+
+Hashing hilft dabei, eindeutige Identifier für Datensätze auf Basis ihres Inhalts zu generieren.
+
+## Beispiel für den Einsatz von Hash-Funktionen in SQL:
+
+```sql
+-- Tabelle für Benutzer anlegen
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY,
+    Username VARCHAR(50) NOT NULL,
+    PasswordHash VARBINARY(512) NOT NULL
+);
+
+-- Beim Anlegen eines neuen Benutzers hashen wir das Passwort
+INSERT INTO Users (UserID, Username, PasswordHash)
+VALUES (1, 'user1', HASHBYTES('SHA2_512', 'password123'));
+
+-- Prüfen, ob das eingegebene Passwort zum gespeicherten Hash passt
+SELECT UserID FROM Users
+WHERE Username = 'user1' AND PasswordHash = HASHBYTES('SHA2_512', 'password123');
+```
+
+## Empfehlungen und Hinweise
+
+### Wahl der Hash-Funktion
+
+- Greife zu modernen, robusten Algorithmen wie `SHA-256` oder `SHA-512`.
+- Vermeide veraltete Funktionen wie `MD5` oder `SHA1` — sie haben bekannte Schwachstellen.
+
+### Sichere Speicherung
+
+Speichere Hashes binär (`VARBINARY`) statt als String (`VARCHAR`), das schont Speicher und vermeidet Genauigkeitsverluste.
+
+### Hashes sind nicht umkehrbar
+
+Denk dran: Hashing ist eine Einwegfunktion. Aus einem Hash lassen sich die Originaldaten nicht rekonstruieren.

@@ -1,0 +1,35 @@
+---
+meta:
+    title: "Was sind die wichtigsten Unterschiede zwischen DELETE und TRUNCATE?"
+    description: "DELETE entfernt einzelne Datensätze mit WHERE-Bedingung, TRUNCATE leert die gesamte Tabelle ohne Möglichkeit zur Wiederherstellung. Erfahre die wichtigsten Unterschiede zwischen diesen Befehlen."
+---
+
+## DELETE:
+
+- Löscht ausgewählte Datensätze aus einer Tabelle.
+- Du kannst eine `WHERE`-Bedingung verwenden, um gezielt Datensätze zu entfernen.
+- Die Operation wird zeilenweise im Transaktionslog aufgezeichnet.
+- `ON DELETE`-Trigger werden ausgelöst.
+- Langsamer als `TRUNCATE`.
+
+Beispiel:
+
+```sql
+DELETE FROM employees WHERE salary < 30000;
+```
+
+## TRUNCATE:
+
+- Löscht alle Datensätze aus der Tabelle, ohne Möglichkeit zur Wiederherstellung per `ROLLBACK` (in den meisten DBMS).
+- `WHERE` kann nicht verwendet werden.
+- Die Operation ist schneller, da sie nicht zeilenweise protokolliert wird.
+- Setzt Identifier zurück (falls Autoincrement verwendet wird).
+- Trigger werden nicht ausgelöst.
+
+Beispiel:
+
+```sql
+TRUNCATE TABLE employees;
+```
+
+Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„TRUNCATE vs DELETE vs DROP: der Unterschied“](https://sql-academy.org/de/blog/sql-truncate-delete-drop).
