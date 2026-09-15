@@ -98,8 +98,8 @@ sondern nur `N` Zeilen davor und `N` Zeilen danach.
 
 Wenn du `ORDER BY` benutzt und im `ROWS|RANGE`-Block nichts angibst, wird in der Window Function
 automatisch die Regel `RANGE BETWEEN UNBOUNDED PRECEDING AND CURRENT ROW` angewendet.
-Das bedeutet: Das Fenster beginnt bei der ersten Zeile und
-endet bei der aktuellen Zeile.
+Das bedeutet: Der Fensterrahmen beginnt bei der ersten Zeile und
+endet bei der aktuellen Zeile, einschließlich aller Zeilen mit denselben Werten in den Sortierspalten wie die aktuelle Zeile.
 
 Die Werte für die Spalte `cumulative_total` werden also so berechnet:
 

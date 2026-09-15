@@ -14,13 +14,15 @@ Vielleicht fragst du dich: „Was bedeutet eigentlich Window?“.
 
 In einer Standard-SQL-Abfrage werden alle Zeilenmengen als ein einziger zusammenhängender Datenblock betrachtet, für den die Aggregatwerte berechnet werden.
 
-Wenn aber Window-Funktionen verwendet werden, wird die Abfrage in Gruppen von Zeilen segmentiert (sogenannte „Fenster“), und für jedes dieser Segmente werden individuelle Aggregatwerte berechnet.
+Wenn aber Window-Funktionen verwendet werden, wird für jede Zeile eine Gruppe zusammenhängender Zeilen (ein sogenanntes „Fenster“) bestimmt, für die ein eigener Aggregatwert berechnet wird.
 
-Dieses Fenster, das an die Window-Funktion übergeben wird, kann sein:
+Diese Zeilenmenge kann sein:
 
 - die gesamte Tabelle
 - einzelne Partitionen der Tabelle, also eine Gruppe von Zeilen auf Basis eines oder mehrerer Felder
-- oder sogar ein konkreter Zeilenbereich innerhalb einer Tabelle oder Partition. Wir können zum Beispiel ein Fenster definieren, das an die Window-Funktion übergeben wird, als die vorherige + die aktuelle Zeile der Tabelle. Dann wird für jede Zeile der Wert der Aggregatfunktion auf eine eigene Weise berechnet, weil sich die Daten, die in die Funktion fließen, dynamisch von Zeile zu Zeile ändern. Das Fenster „gleitet“ dann sozusagen über die Tabelle.
+- oder ein Fensterrahmen, also ein konkreter Zeilenbereich innerhalb einer Tabelle oder Partition.
+
+Wir können zum Beispiel einen Fensterrahmen definieren, der an die Window-Funktion übergeben wird, als die vorherige + die aktuelle Zeile der Tabelle. Dann wird für jede Zeile der Wert der Aggregatfunktion auf eine eigene Weise berechnet, weil sich die Daten, die in die Funktion fließen, dynamisch von Zeile zu Zeile ändern. Der Rahmen „gleitet“ dann sozusagen über die Tabelle.
 
 ### Visualisierung
 
@@ -40,11 +42,11 @@ Und jetzt schauen wir uns an, wie die Window-Funktion bei verschiedenen übergeb
 
     ![Schema der Aufteilung in Partitionen](https://sql-academy.org/static/guidePage/windows-functions/3_de.png "Schema der Aufteilung in Partitionen")
 
-- Als Fenster kann auch eine spezifischere Menge von Zeilen angegeben werden. Zum Beispiel kann das Fenster als "vorherige + aktuelle Zeile" der Tabelle definiert werden. Dann sieht es folgendermaßen aus:
+- Als Fensterrahmen kann auch eine spezifischere Menge von Zeilen angegeben werden. Zum Beispiel kann der Rahmen als "vorherige + aktuelle Zeile" der Tabelle definiert werden. Dann sieht es folgendermaßen aus:
 
-    ![Schema der Aufteilung in Partitionen](https://sql-academy.org/static/guidePage/windows-functions/4_de.png "Schema der Aufteilung in Partitionen")
+    ![Schema zur Bildung von Fensterrahmen](https://sql-academy.org/static/guidePage/windows-functions/4_de.png "Schema zur Bildung von Fensterrahmen")
 
-    Anzumerken ist, dass das Fenster für die erste Zeile nur aus 1 Datensatz besteht, weil es keine vorherige Zeile gibt.
+    Anzumerken ist, dass der Rahmen für die erste Zeile nur aus einem Datensatz besteht, weil es keine vorherige Zeile gibt.
 
 ## Syntax einer Window-Funktion
 
@@ -60,13 +62,13 @@ OVER (
 Wobei:
 
 - `<window_funktion>(<tabellenfeld>)` — die verwendete Window-Funktion. Zum Beispiel `AVG(price)`.
-- Danach folgt `OVER`, das das Fenster (die Gruppe von Zeilen) definiert, das an die Window-Funktion übergeben wird. Bleibt die Konstruktion `OVER ()` ohne Parameter, dient die gesamte Tabelle als Fenster.
+- Danach folgt `OVER`, das das Fenster (die Gruppe von Zeilen) definiert, das an die Window-Funktion übergeben wird. Bleibt die Konstruktion `OVER ()` ohne Parameter, enthält das Fenster alle Zeilen des Abfrageergebnisses.
 
 Innerhalb von `OVER` folgen dann 3 optionale Parameter, mit denen sich das Fenster flexibel konfigurieren lässt:
 
 - mit `PARTITION BY <spalten_zum_partitionieren>` wird die Ergebnismenge in nicht überlappende Teilmengen aufgeteilt, wobei jede Teilmenge Zeilen mit gleichen Werten in einer oder mehreren Spalten enthält. So entstehen Partitionen.
 - mit `ORDER BY <spalten_zum_sortieren>` wird die Reihenfolge der Zeilen innerhalb des Fensters festgelegt. Das spielt besonders bei Rang-Window-Funktionen eine wichtige Rolle.
-- mit `ROWS|RANGE <definition_des_zeilenbereichs>` werden Zeilenbereiche gebildet. Mit diesem Parameter lässt sich angeben, wie viele Zeilen vor und nach der aktuellen ins Fenster aufgenommen werden.
+- mit `ROWS|RANGE <definition_des_zeilenbereichs>` wird der Fensterrahmen festgelegt. Mit diesem Parameter lässt sich angeben, wie viele Zeilen vor und nach der aktuellen Zeile aufgenommen werden.
 
 Auf jeden dieser Parameter gehen wir in den folgenden Artikeln genauer ein.
 
@@ -285,7 +287,7 @@ Die Funktion `COUNT` gibt die Anzahl der ihr übergebenen Zeilen zurück, und so
 
 ## Ausführungsreihenfolge von Window-Funktionen in SELECT
 
-Bei der Verwendung von Window-Funktionen ist es wichtig zu verstehen, in welcher Reihenfolge sie ausgeführt werden. Wie wir im Schema unten sehen können, werden die Fenster im vorletzten Schritt verarbeitet, also nach dem Filtern und Gruppieren, aber vor dem finalen Sortieren der Ergebnisse.
+Bei der Verwendung von Window-Funktionen ist es wichtig zu verstehen, in welcher Reihenfolge sie ausgeführt werden. Wie wir im Schema unten sehen können, werden die Window-Funktionen im vorletzten Schritt verarbeitet, also nach dem Filtern und Gruppieren, aber vor dem finalen Sortieren der Ergebnisse.
 
 ![Ausführungsreihenfolge der Window-Funktion in einer SELECT-Abfrage](https://sql-academy.org/static/guidePage/windows-functions/query-order_de.png "Ausführungsreihenfolge der Window-Funktion in einer SELECT-Abfrage")
 
