@@ -402,7 +402,7 @@ COALESCE(wert1, wert2, wert3)
     SELECT COALESCE('SQL Academy', 'Alternative zu SQL Academy') AS sql_trainer;
     ```
 
-    | coalesce    |
+    | sql_trainer |
     | ----------- |
     | SQL Academy |
 
@@ -426,7 +426,7 @@ COALESCE(wert1, wert2, wert3)
     SELECT COALESCE(NULL, 'Alternative zu SQL Academy') AS sql_trainer;
     ```
 
-    | coalesce                   |
+    | sql_trainer                |
     | -------------------------- |
     | Alternative zu SQL Academy |
 
@@ -436,7 +436,7 @@ COALESCE(wert1, wert2, wert3)
     SELECT COALESCE(NULL, NULL, 'SQL Academy', 'Notfallvariante') AS sql_trainer;
     ```
 
-    | coalesce    |
+    | sql_trainer |
     | ----------- |
     | SQL Academy |
 
@@ -475,9 +475,9 @@ Die Funktion `NULLIF` liefert `NULL`, wenn `wert_1` gleich `wert_2` ist; andernf
     SELECT NULLIF('SQL Academy', 'SQL Academy') AS sql_trainer;
     ```
 
-    | nullif |
-    | ------ |
-    | null   |
+    | sql_trainer |
+    | ----------- |
+    | null        |
 
 **MySQL**
 
@@ -499,7 +499,7 @@ Die Funktion `NULLIF` liefert `NULL`, wenn `wert_1` gleich `wert_2` ist; andernf
     SELECT NULLIF('SQL Academy', 'Alternative zu SQL Academy') AS sql_trainer;
     ```
 
-    | nullif      |
+    | sql_trainer |
     | ----------- |
     | SQL Academy |
 
