@@ -30,6 +30,8 @@ Holen wir uns zum Beispiel die Namen der Airlines aus der Tabelle `Company` in a
 SELECT name FROM Company ORDER BY name;
 ```
 
+**MySQL**
+
 | name       |
 | ---------- |
 | Aeroflot   |
@@ -37,6 +39,16 @@ SELECT name FROM Company ORDER BY name;
 | British_AW |
 | Dale_avia  |
 | Don_avia   |
+
+**PostgreSQL**
+
+| name       |
+| ---------- |
+| Aeroflot   |
+| British_AW |
+| Dale_avia  |
+| Don_avia   |
+| air_France |
 
 ## Auf- und absteigende Sortierung für die wichtigsten Datentypen
 
