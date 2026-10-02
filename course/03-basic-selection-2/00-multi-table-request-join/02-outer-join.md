@@ -77,6 +77,10 @@ Daten in der Tabelle `Schedule` (Stundenplan):
 | 38  | 2019-09-04T00:00:00.000Z | 8     | 4           | 8       | 2       | 42        |
 | 39  | 2019-09-04T00:00:00.000Z | 8     | 5           | 11      | 1       | 43        |
 | 40  | 2019-09-05T00:00:00.000Z | 8     | 2           | 11      | 1       | 43        |
+| 41  | 2019-09-03T00:00:00.000Z | 7     | 1           | 8       | 2       | 42        |
+| 42  | 2019-09-03T00:00:00.000Z | 7     | 2           | 4       | 3       | 13        |
+| 43  | 2019-09-03T00:00:00.000Z | 7     | 3           | 15      | 10      | 40        |
+| 44  | 2019-09-02T00:00:00.000Z | 7     | 2           | 6       | 5       | 35        |
 
 ```sql
 SELECT Timepair.id "timepair.id", start_pair, end_pair,
@@ -87,6 +91,7 @@ FROM Timepair
 
 | timepair.id | start_pair | end_pair | schedule.id | date                     | class | number_pair | teacher | subject | classroom |
 | ----------- | ---------- | -------- | ----------- | ------------------------ | ----- | ----------- | ------- | ------- | --------- |
+| 1           | 08:30:00   | 09:15:00 | 41          | 2019-09-03T00:00:00.000Z | 7     | 1           | 8       | 2       | 42        |
 | 1           | 08:30:00   | 09:15:00 | 35          | 2019-09-04T00:00:00.000Z | 8     | 1           | 1       | 11      | 4         |
 | 1           | 08:30:00   | 09:15:00 | 32          | 2019-09-03T00:00:00.000Z | 8     | 1           | 10      | 10      | 40        |
 | 1           | 08:30:00   | 09:15:00 | 21          | 2019-08-30T00:00:00.000Z | 8     | 1           | 7       | 9       | 53        |
@@ -96,6 +101,8 @@ FROM Timepair
 | 1           | 08:30:00   | 09:15:00 | 7           | 2019-09-03T00:00:00.000Z | 9     | 1           | 5       | 6       | 36        |
 | 1           | 08:30:00   | 09:15:00 | 4           | 2019-09-02T00:00:00.000Z | 9     | 1           | 4       | 3       | 13        |
 | 1           | 08:30:00   | 09:15:00 | 1           | 2019-09-01T00:00:00.000Z | 9     | 1           | 11      | 1       | 47        |
+| 2           | 09:20:00   | 10:05:00 | 44          | 2019-09-02T00:00:00.000Z | 7     | 2           | 6       | 5       | 35        |
+| 2           | 09:20:00   | 10:05:00 | 42          | 2019-09-03T00:00:00.000Z | 7     | 2           | 4       | 3       | 13        |
 | 2           | 09:20:00   | 10:05:00 | 40          | 2019-09-05T00:00:00.000Z | 8     | 2           | 11      | 1       | 43        |
 | 2           | 09:20:00   | 10:05:00 | 36          | 2019-09-04T00:00:00.000Z | 8     | 2           | 1       | 12      | 42        |
 | 2           | 09:20:00   | 10:05:00 | 33          | 2019-09-03T00:00:00.000Z | 8     | 2           | 7       | 9       | 53        |
@@ -107,6 +114,7 @@ FROM Timepair
 | 2           | 09:20:00   | 10:05:00 | 8           | 2019-09-03T00:00:00.000Z | 9     | 2           | 13      | 7       | 37        |
 | 2           | 09:20:00   | 10:05:00 | 5           | 2019-09-02T00:00:00.000Z | 9     | 2           | 2       | 4       | 34        |
 | 2           | 09:20:00   | 10:05:00 | 2           | 2019-09-01T00:00:00.000Z | 9     | 2           | 8       | 2       | 13        |
+| 3           | 10:15:00   | 11:00:00 | 43          | 2019-09-03T00:00:00.000Z | 7     | 3           | 15      | 10      | 40        |
 | 3           | 10:15:00   | 11:00:00 | 37          | 2019-09-04T00:00:00.000Z | 8     | 3           | 3       | 13      | 43        |
 | 3           | 10:15:00   | 11:00:00 | 34          | 2019-09-03T00:00:00.000Z | 8     | 3           | 7       | 9       | 53        |
 | 3           | 10:15:00   | 11:00:00 | 30          | 2019-09-02T00:00:00.000Z | 8     | 3           | 6       | 8       | 38        |
@@ -131,7 +139,7 @@ FROM Timepair
 | 7           | 14:35:00   | 15:20:00 | null        | null                     | null  | null        | null    | null    | null      |
 | 8           | 15:25:00   | 16:10:00 | null        | null                     | null  | null        | null    | null    | null      |
 
-Alle acht Klingelzeiten sind im Ergebnis gelandet — genau das verspricht der linke Join. Zeilen sind es aber 43 und nicht 8.
+Alle acht Klingelzeiten sind im Ergebnis gelandet — genau das verspricht der linke Join. Zeilen sind es aber 47 und nicht 8: 44 Zeilen für die Unterrichtseinträge in `Schedule` und weitere 3 für Klingelzeiten ohne Unterricht.
 
 Ein Join ergänzt die linke Tabelle nicht, sondern geht alle passenden Zeilenpaare durch. Dieselbe Stundennummer kommt im Stundenplan viele Male vor — an verschiedenen Tagen und in verschiedenen Klassen —, und jede Übereinstimmung ergibt eine eigene Zeile. Ist der Schlüssel in der rechten Tabelle nicht eindeutig, hat das Ergebnis mehr Zeilen als die linke Tabelle.
 
@@ -169,7 +177,7 @@ FROM Timepair
     RIGHT JOIN Schedule ON Schedule.number_pair = Timepair.id;
 ```
 
-Das Ergebnis hat 40 Zeilen — genau so viele, wie `Schedule` Datensätze enthält — und keine einzige Zeile mit `NULL`. Es stimmt also vollständig mit dem inneren Join überein.
+Das Ergebnis hat 44 Zeilen — genau so viele, wie `Schedule` Datensätze enthält — und keine einzige Zeile mit `NULL`. Es stimmt also vollständig mit dem inneren Join überein.
 
 Der Grund: Jeder Unterrichtseintrag verweist auf eine vorhandene Klingelzeit, die rechte Tabelle hat schlicht keine Zeilen ohne Gegenstück. Die Art des Joins gibt die Regel vor, was am Ende im Ergebnis steht, entscheiden die Daten.
 
@@ -192,7 +200,7 @@ FROM Timepair
     FULL OUTER JOIN Schedule ON Schedule.number_pair = Timepair.id;
 ```
 
-Mit den Daten dieser Datenbank stimmt das Ergebnis mit dem linken Join überein — dieselben 43 Zeilen: Zeilen ohne Gegenstück gibt es hier nur links.
+Mit den Daten dieser Datenbank stimmt das Ergebnis mit dem linken Join überein — dieselben 47 Zeilen: Zeilen ohne Gegenstück gibt es hier nur links.
 
 **MySQL**
 
