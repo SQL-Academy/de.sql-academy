@@ -74,10 +74,17 @@ Genau dafür gibt es den `GROUP BY`-Operator.
 ## Allgemeine Struktur einer Query mit GROUP BY
 
 ```sql
-SELECT [Literale, Aggregatfunktionen, Gruppierungsfelder]
+SELECT { literal | aggregatfunktion | gruppierungsfeld } [, ...]
 FROM tabellen_name
-GROUP BY gruppierungsfelder;
+GROUP BY gruppierungsfeld [, ...];
 ```
+
+- `literal` — Ein fester Wert wie `'text'` oder `1`. Er ist für alle Gruppen gleich.
+- `aggregatfunktion` — Eine Funktion, die aus allen Zeilen einer Gruppe einen Wert berechnet, zum Beispiel
+  `AVG(price)`.
+- `gruppierungsfeld` — Die Spalte, nach der die Zeilen in Gruppen aufgeteilt werden: Zeilen mit gleichem Wert
+  landen in einer Gruppe. Du kannst mehrere Spalten durch Kommas getrennt angeben.
+- `tabellen_name` — Die Tabelle, deren Zeilen gruppiert werden.
 
 Damit unsere Datensätze nach Unterkunftstyp gruppiert werden, müssen wir nach `GROUP BY` das Feld `home_type` angeben – also das Feld, nach dem gruppiert wird.
 

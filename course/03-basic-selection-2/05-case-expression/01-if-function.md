@@ -15,11 +15,12 @@ Jetzt ist die Funktion `IF` an der Reihe.
 ## Syntax von IF
 
 ```sql
-IF(bedingung, wert_1, wert_2);
+IF(bedingung, wert_wenn_wahr, wert_wenn_falsch)
 ```
 
-Wenn die als erstes Argument übergebene Bedingung wahr ist,
-gibt die Funktion `IF` den Wert des zweiten Arguments `wert_1` zurück, andernfalls den Wert des dritten Arguments `wert_2`.
+- `bedingung` — Der logische Ausdruck, der geprüft wird, zum Beispiel `price > 100`.
+- `wert_wenn_wahr` — Der Wert, den `IF` zurückgibt, wenn die Bedingung wahr ist.
+- `wert_wenn_falsch` — Der Wert, den `IF` zurückgibt, wenn die Bedingung falsch oder `NULL` ist.
 
 **PostgreSQL**
 
@@ -339,11 +340,12 @@ die speziell für die Behandlung von `NULL`-Werten gedacht sind.
 ### Syntax von IFNULL
 
 ```sql
-IFNULL(wert, alternativ_wert);
+IFNULL(wert, alternativ_wert)
 ```
 
-Die Funktion `IFNULL` gibt den als erstes Argument übergebenen `wert` zurück, sofern dieser nicht `NULL` ist;
-ansonsten wird `alternativ_wert` zurückgegeben.
+- `wert` — Der Wert, der geprüft wird, zum Beispiel eine Spalte, in der `NULL` vorkommen kann.
+  Ist er nicht `NULL`, gibt die Funktion ihn zurück.
+- `alternativ_wert` — Der Wert, den die Funktion zurückgibt, wenn `wert` `NULL` ist.
 
 **PostgreSQL**
 
@@ -355,8 +357,11 @@ Sie liefert den ersten Wert aus der Argumentliste, der nicht `NULL` ist.
 ### Syntax
 
 ```sql
-COALESCE(wert1, wert2, ..., wertN);
+COALESCE(wert [, ...])
 ```
+
+- `wert` — Werte durch Kommas getrennt, zum Beispiel Tabellenspalten. Sie werden von links nach
+  rechts geprüft, und als letzten Wert kannst du einen Ersatzwert angeben.
 
 Das ist deutlich angenehmer, als lange `CASE`-Ausdrücke für die `NULL`-Behandlung zu schreiben.
 
@@ -448,10 +453,11 @@ Das hilft beim Filtern oder beim Umgang mit "leeren" Werten.
 ### Syntax von NULLIF
 
 ```sql
-NULLIF(wert_1, wert_2);
+NULLIF(wert_1, wert_2)
 ```
 
-Die Funktion `NULLIF` liefert `NULL`, wenn `wert_1` gleich `wert_2` ist; andernfalls gibt sie `wert_1` zurück.
+- `wert_1` — Der Wert, den die Funktion zurückgibt, wenn er nicht gleich `wert_2` ist.
+- `wert_2` — Der Vergleichswert. Ist `wert_1` gleich diesem Wert, gibt die Funktion `NULL` zurück.
 
 ### Beispiele zur Funktion NULLIF
 

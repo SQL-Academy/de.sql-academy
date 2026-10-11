@@ -15,30 +15,44 @@ Mit `LIMIT` holst du einen bestimmten Ausschnitt von Datensätzen aus einer oder
 **Syntax mit Komma:**
 
 ```sql
-SELECT auswahl_felder
-FROM tabellen_liste
-LIMIT [anzahl_uebersprungener_datensaetze,] anzahl_datensaetze_zur_ausgabe;
+SELECT tabellen_felder
+FROM tabellen_name
+LIMIT [anzahl_uebersprungen,] anzahl_zeilen;
 ```
+
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen.
+- `tabellen_name` — Die Tabelle, aus der die Daten ausgewählt werden.
+- `anzahl_uebersprungen` (optional) — Wie viele Zeilen vor der Ausgabe übersprungen werden. Lässt du es weg, beginnt die
+  Ausgabe mit der ersten Zeile.
+- `anzahl_zeilen` — Wie viele Zeilen ausgegeben werden. Hat das Ergebnis weniger Zeilen, kommen alle.
 
 **Syntax mit OFFSET:**
 
 ```sql
-SELECT auswahl_felder
-FROM tabellen_liste
-LIMIT anzahl_datensaetze_zur_ausgabe [OFFSET anzahl_uebersprungener_datensaetze];
+SELECT tabellen_felder
+FROM tabellen_name
+LIMIT anzahl_zeilen [OFFSET anzahl_uebersprungen];
 ```
 
-Wenn du die Anzahl übersprungener Datensätze weglässt, wird ab dem Tabellenanfang gezählt.
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen.
+- `tabellen_name` — Die Tabelle, aus der die Daten ausgewählt werden.
+- `anzahl_zeilen` — Wie viele Zeilen ausgegeben werden. Hat das Ergebnis weniger Zeilen, kommen alle.
+- `anzahl_uebersprungen` (optional) — Wie viele Zeilen vor der Ausgabe übersprungen werden. Lässt du es weg, beginnt die
+  Ausgabe mit der ersten Zeile.
 
 **PostgreSQL**
 
 ```sql
-SELECT auswahl_felder
-FROM tabellen_liste
-LIMIT anzahl_datensaetze_zur_ausgabe [OFFSET anzahl_uebersprungener_datensaetze];
+SELECT tabellen_felder
+FROM tabellen_name
+LIMIT anzahl_zeilen [OFFSET anzahl_uebersprungen];
 ```
 
-Ohne `OFFSET` wird ab dem Tabellenanfang gezählt.
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen.
+- `tabellen_name` — Die Tabelle, aus der die Daten ausgewählt werden.
+- `anzahl_zeilen` — Wie viele Zeilen ausgegeben werden. Hat das Ergebnis weniger Zeilen, kommen alle.
+- `anzahl_uebersprungen` (optional) — Wie viele Zeilen vor der Ausgabe übersprungen werden. Lässt du es weg, beginnt die
+  Ausgabe mit der ersten Zeile.
 
 ## Anwendungsbeispiel
 

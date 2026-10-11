@@ -43,9 +43,14 @@ Dafür gibt es in PostgreSQL die Funktion `CAST` und den Operator `::`.
 **MySQL**
 
 ```sql
-CAST(wert AS ziel_typ);
-CONVERT(wert, ziel_typ);
+CAST(wert AS ziel_typ)
+CONVERT(wert, ziel_typ)
 ```
+
+- `wert` — Was umgewandelt werden soll: eine Zahl, ein String, ein Datum oder eine
+  Tabellenspalte.
+- `ziel_typ` — Der Typ, in den der Wert umgewandelt wird. Die verfügbaren Typen findest du weiter
+  unten.
 
 Zum Beispiel,
 
@@ -60,9 +65,14 @@ SELECT CAST(12005.6 AS DECIMAL) AS cast_example, CONVERT(12005.4, DECIMAL) AS co
 **PostgreSQL**
 
 ```sql
-CAST(wert AS ziel_typ);
-wert::ziel_typ;
+CAST(wert AS ziel_typ)
+wert::ziel_typ
 ```
+
+- `wert` — Was umgewandelt werden soll: eine Zahl, ein String, ein Datum oder eine
+  Tabellenspalte.
+- `ziel_typ` — Der Typ, in den der Wert umgewandelt wird. Die verfügbaren Typen findest du weiter
+  unten.
 
 Zum Beispiel,
 

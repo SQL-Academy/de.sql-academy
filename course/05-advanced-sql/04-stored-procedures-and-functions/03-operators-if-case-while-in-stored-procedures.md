@@ -26,25 +26,41 @@ In diesem Artikel schauen wir uns die wichtigsten Kontrollstrukturen an: die Ver
 
 ```sql
 IF bedingung THEN
-    -- Code, der bei wahrer Bedingung ausgeführt wird
-ELSEIF andere_bedingung THEN
-    -- Code für die alternative Bedingung
-ELSE
-    -- Default-Code
+    anweisungen
+[ELSEIF bedingung THEN
+    anweisungen] ...
+[ELSE
+    anweisungen]
 END IF;
 ```
+
+- `bedingung` — Ein logischer Ausdruck, zum Beispiel `student_age < 18`. Es greift der erste Zweig,
+  dessen Bedingung wahr ist, die übrigen werden übersprungen.
+- `anweisungen` — Eine oder mehrere SQL-Anweisungen, jede endet mit `;`. Sie laufen, wenn dieser Zweig
+  gewählt wird.
+- `ELSEIF` (Schlüsselwort, optional) — Ein weiterer Zweig mit eigener Bedingung. Er wird nur geprüft, wenn alle Bedingungen
+  darüber falsch sind. Du kannst mehrere solcher Zweige anlegen.
+- `ELSE` (Schlüsselwort, optional) — Der Zweig, der läuft, wenn keine der Bedingungen wahr war.
 
 **PostgreSQL**
 
 ```sql
 IF bedingung THEN
-    -- Code, der bei wahrer Bedingung ausgeführt wird
-ELSIF andere_bedingung THEN
-    -- Code für die alternative Bedingung
-ELSE
-    -- Default-Code
+    anweisungen
+[ELSIF bedingung THEN
+    anweisungen] ...
+[ELSE
+    anweisungen]
 END IF;
 ```
+
+- `bedingung` — Ein logischer Ausdruck, zum Beispiel `student_age < 18`. Es greift der erste Zweig,
+  dessen Bedingung wahr ist, die übrigen werden übersprungen.
+- `anweisungen` — Eine oder mehrere SQL-Anweisungen, jede endet mit `;`. Sie laufen, wenn dieser Zweig
+  gewählt wird.
+- `ELSIF` (Schlüsselwort, optional) — Ein weiterer Zweig mit eigener Bedingung. Er wird nur geprüft, wenn alle Bedingungen
+  darüber falsch sind. Du kannst mehrere solcher Zweige anlegen.
+- `ELSE` (Schlüsselwort, optional) — Der Zweig, der läuft, wenn keine der Bedingungen wahr war.
 
 ### Beispiel für IF
 
@@ -133,21 +149,31 @@ SELECT categorize_student_by_age(1) AS age_category;
 
 ```sql
 CASE
-    WHEN bedingung1 THEN ergebnis1
-    WHEN bedingung2 THEN ergebnis2
-    ELSE default_ergebnis
-END CASE;
+    WHEN bedingung THEN ergebnis
+    [WHEN ...]
+    [ELSE standard_ergebnis]
+END
 ```
+
+- `bedingung` — Ein logischer Ausdruck, der in seinem `WHEN`-Zweig geprüft wird. Es kann mehrere
+  Zweige geben: Es greift der erste, dessen Bedingung wahr ist.
+- `ergebnis` — Der Wert, den `CASE` annimmt, wenn die Bedingung dieses Zweigs wahr ist.
+- `standard_ergebnis` (optional) — Der Wert für den Fall, dass keine Bedingung zutrifft. Ohne `ELSE` kommt `NULL` zurück.
 
 **PostgreSQL**
 
 ```sql
 CASE
-    WHEN bedingung1 THEN ergebnis1
-    WHEN bedingung2 THEN ergebnis2
-    ELSE default_ergebnis
-END CASE;
+    WHEN bedingung THEN ergebnis
+    [WHEN ...]
+    [ELSE standard_ergebnis]
+END
 ```
+
+- `bedingung` — Ein logischer Ausdruck, der in seinem `WHEN`-Zweig geprüft wird. Es kann mehrere
+  Zweige geben: Es greift der erste, dessen Bedingung wahr ist.
+- `ergebnis` — Der Wert, den `CASE` annimmt, wenn die Bedingung dieses Zweigs wahr ist.
+- `standard_ergebnis` (optional) — Der Wert für den Fall, dass keine Bedingung zutrifft. Ohne `ELSE` kommt `NULL` zurück.
 
 ### Beispiel für CASE
 
@@ -232,17 +258,27 @@ Mit `WHILE` kannst du Code wiederholt ausführen, solange eine Bedingung erfüll
 
 ```sql
 WHILE bedingung DO
-    -- Code, der in der Schleife ausgeführt wird
+    anweisungen
 END WHILE;
 ```
+
+- `bedingung` — Ein logischer Ausdruck, der vor jedem Schleifendurchlauf geprüft wird. Solange er wahr
+  ist, werden die Anweisungen wiederholt.
+- `anweisungen` — Die SQL-Anweisungen im Schleifenkörper. Eine davon sollte die Bedingung irgendwann
+  falsch machen, sonst endet die Schleife nie.
 
 **PostgreSQL**
 
 ```sql
 WHILE bedingung LOOP
-    -- Code, der in der Schleife ausgeführt wird
+    anweisungen
 END LOOP;
 ```
+
+- `bedingung` — Ein logischer Ausdruck, der vor jedem Schleifendurchlauf geprüft wird. Solange er wahr
+  ist, werden die Anweisungen wiederholt.
+- `anweisungen` — Die SQL-Anweisungen im Schleifenkörper. Eine davon sollte die Bedingung irgendwann
+  falsch machen, sonst endet die Schleife nie.
 
 ### Beispiel für WHILE
 

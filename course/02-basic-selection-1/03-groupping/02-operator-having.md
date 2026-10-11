@@ -89,13 +89,24 @@ GROUP BY home_type
 ## Allgemeine Struktur einer Query mit HAVING
 
 ```sql
-SELECT [konstanten, aggregat_funktionen, gruppierungs_felder]
+SELECT auswahl_felder
 FROM tabellen_name
-WHERE zeilen_einschraenkungs_bedingungen
-GROUP BY gruppierungs_felder
-HAVING bedingung_fuer_zeilen_nach_gruppierung
-ORDER BY sortier_bedingung
+[WHERE zeilen_bedingung]
+GROUP BY gruppierungsfeld [, ...]
+HAVING gruppen_bedingung
+[ORDER BY sortier_feld];
 ```
+
+- `auswahl_felder` — Was für jede Gruppe ausgegeben wird: Literale, Aggregatfunktionen und
+  Gruppierungsfelder.
+- `tabellen_name` — Die Tabelle, aus der die Zeilen kommen.
+- `zeilen_bedingung` (optional) — Filtert die Zeilen der Tabelle vor der Gruppierung. Aggregatfunktionen kannst du darin
+  nicht verwenden.
+- `gruppierungsfeld` — Die Spalte, nach der die Zeilen in Gruppen aufgeteilt werden. Du kannst mehrere
+  Spalten durch Kommas getrennt angeben.
+- `gruppen_bedingung` — Filtert die Gruppen nach der Gruppierung, zum Beispiel `COUNT(*) >= 5`. Darin kannst du
+  Aggregatfunktionen verwenden.
+- `sortier_feld` (optional) — Die Spalte oder der Ausdruck, nach dem das Ergebnis sortiert wird.
 
 ## Anwendungsbeispiel für HAVING
 

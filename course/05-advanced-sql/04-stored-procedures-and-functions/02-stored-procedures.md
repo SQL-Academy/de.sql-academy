@@ -21,16 +21,24 @@ Anders als Functions können Procedures Daten verändern und komplexe Business-L
 **MySQL**
 
 ```sql
-CREATE PROCEDURE procedure_name(parameter1 TYP, parameter2 TYP, ...)
+CREATE PROCEDURE prozedur_name([[IN | OUT | INOUT] parameter typ [, ...]])
 BEGIN
     -- Logik der Procedure
 END;
 ```
 
+- `prozedur_name` — Der Name, mit dem du die Procedure über `CALL` aufrufst.
+- `IN | OUT | INOUT` (Schlüsselwort, optional) — Die Richtung des Parameters: in die Procedure hinein, aus ihr heraus oder in beide
+  Richtungen. Standard ist `IN`, mehr dazu weiter unten.
+- `parameter` (optional) — Der Name des Parameters, über den du seinen Wert in der Procedure nutzt. Du kannst
+  mehrere Parameter mit Komma angeben oder die Klammern leer lassen, wenn du keine
+  brauchst.
+- `typ` — Der Datentyp des Parameters: `INT`, `DATE`, `VARCHAR(50)` usw.
+
 **PostgreSQL**
 
 ```sql
-CREATE OR REPLACE PROCEDURE procedure_name(parameter1 TYP, parameter2 TYP, ...)
+CREATE OR REPLACE PROCEDURE prozedur_name([parameter typ [, ...]])
 LANGUAGE plpgsql
 AS $$
 BEGIN
@@ -38,6 +46,12 @@ BEGIN
 END;
 $$;
 ```
+
+- `prozedur_name` — Der Name, mit dem du die Procedure über `CALL` aufrufst.
+- `parameter` (optional) — Der Name des Parameters, über den du seinen Wert in der Procedure nutzt. Du kannst
+  mehrere Parameter mit Komma angeben oder die Klammern leer lassen, wenn du keine
+  brauchst.
+- `typ` — Der Datentyp des Parameters: `INT`, `DATE`, `VARCHAR(50)` usw.
 
 `LANGUAGE plpgsql` — gibt an, dass die Procedure in **PL/pgSQL** geschrieben ist (der prozeduralen Sprache von PostgreSQL).
 

@@ -11,15 +11,18 @@ Die Ergebnisse von SQL-Queries lassen sich kombinieren. Dafür gibt es den `UNIO
 ## Allgemeine Struktur einer Query mit UNION
 
 ```sql
-SELECT tabellen_felder FROM tabellen_liste ...
+SELECT tabellen_felder FROM tabellen_name
 UNION [ALL]
-SELECT tabellen_felder FROM tabellen_liste ... ;
+SELECT tabellen_felder FROM tabellen_name;
 ```
 
-`UNION` entfernt standardmäßig Duplikate aus der Ergebnistabelle. Wenn du Duplikate behalten willst, gibt es den optionalen Parameter `ALL`.
+- `tabellen_felder` — Die Spalten, die jede der Queries auswählt. Beide Queries müssen gleich viele Spalten
+  liefern, und Spalten an derselben Position müssen kompatible Typen haben.
+- `tabellen_name` — Die Tabelle, aus der jede der Queries ihre Daten holt.
+- `ALL` (Schlüsselwort, optional) — Behält doppelte Zeilen im Ergebnis. Ohne `ALL` werden Duplikate entfernt.
 
-- Verwechsle das Kombinieren von Queries nicht mit dem Verknüpfen von Tabellen – dafür ist `JOIN` da.
-- Verwechsle das Kombinieren von Queries auch nicht mit Subqueries. Subqueries laufen auf verknüpften Tabellen.
+* Verwechsle das Kombinieren von Queries nicht mit dem Verknüpfen von Tabellen – dafür ist `JOIN` da.
+* Verwechsle das Kombinieren von Queries auch nicht mit Subqueries. Subqueries laufen auf verknüpften Tabellen.
 
 `UNION` kombiniert Tabellen, die nicht miteinander verknüpft sind, aber eine ähnliche Struktur haben.
 

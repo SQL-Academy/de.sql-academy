@@ -15,9 +15,16 @@ landet er im Ergebnis – sonst wird er verworfen.
 
 ```sql
 SELECT [DISTINCT] tabellen_felder FROM tabellen_name
-WHERE bedingung_zur_zeilen_einschraenkung
-[logischer_operator weitere_bedingung_zur_zeilen_einschraenkung];
+WHERE bedingung [logischer_operator bedingung] [...];
 ```
+
+- `DISTINCT` (Schlüsselwort, optional) — Entfernt doppelte Zeilen aus dem Ergebnis.
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen, oder `*` für alle Spalten.
+- `tabellen_name` — Die Tabelle, aus der die Zeilen ausgewählt werden.
+- `bedingung` — Eine Prüfung für jede Zeile, zum Beispiel `price > 100`. Ins Ergebnis kommen nur die
+  Zeilen, für die die Bedingung wahr ist.
+- `logischer_operator` (optional) — Verknüpft mehrere Bedingungen, zum Beispiel müssen bei `AND` beide erfüllt sein, bei
+  `OR` reicht eine.
 
 So kann zum Beispiel eine Query mit `WHERE` aussehen:
 

@@ -11,10 +11,18 @@ Um neue Datensätze in eine Tabelle einzufügen, verwendest du den Operator `INS
 ## Allgemeine Struktur einer Query mit INSERT
 
 ```sql
-INSERT INTO tabellen_name [(tabellen_feld, ...)]
-VALUES (wert_des_tabellen_felds, ...)
-| SELECT tabellen_feld, ... FROM tabellen_name ...
+INSERT INTO tabellen_name [(tabellen_feld [, ...])]
+{ VALUES (wert [, ...]) [, ...] | select_ausdruck };
 ```
+
+- `tabellen_name` — Die Tabelle, in die neue Datensätze eingefügt werden.
+- `tabellen_feld` (optional) — Die Spalten, die Werte bekommen. Ohne diese Liste gibst du Werte für alle Spalten der
+  Tabelle an.
+- `wert` — Ein Wert für eine Spalte: eine Zahl, ein String, ein Ausdruck oder `NULL`. Die Werte
+  stehen in derselben Reihenfolge wie die Spalten. Jedes Klammerpaar ist eine Zeile,
+  mehrere Zeilen trennst du mit Kommas.
+- `select_ausdruck` (Unterabfrage) — Eine `SELECT`-Query, deren Ergebniszeilen in die Tabelle eingefügt werden. Sie muss so
+  viele Spalten liefern, wie du aufgezählt hast.
 
 Werte kannst du entweder direkt mit `VALUES` in Klammern und durch Kommas getrennt auflisten oder über einen `SELECT`-Operator einfügen.
 
@@ -23,9 +31,14 @@ Werte kannst du entweder direkt mit `VALUES` in Klammern und durch Kommas getren
 Beim Einsatz des `INSERT`-Operators kannst du explizit angeben, in welche Felder der Tabelle die Daten geschrieben werden. Dazu listest du die Feldnamen in Klammern nach dem Tabellennamen auf:
 
 ```sql
-INSERT INTO tabellen_name (feld1, feld2, feld3)
-VALUES (wert1, wert2, wert3);
+INSERT INTO tabellen_name (tabellen_feld [, ...])
+VALUES (wert [, ...]);
 ```
+
+- `tabellen_name` — Die Tabelle, in die neue Datensätze eingefügt werden.
+- `tabellen_feld` — Die Spalte, in die der Wert geschrieben wird. Du listest die Spalten durch Kommas
+  getrennt in beliebiger Reihenfolge auf.
+- `wert` — Der Wert für die Spalte an derselben Position in der Feldliste.
 
 **Wichtige Regeln:**
 

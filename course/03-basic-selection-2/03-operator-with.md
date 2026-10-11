@@ -26,17 +26,16 @@ Eine CTE ist nur innerhalb der Query gültig, zu der sie gehört. Das verbessert
 ## Syntax des WITH-Operators
 
 ```sql
-WITH cte_name [(spalte_1 [, spalte_2 ] …)] AS (subquery)
-    [, cte_name [(spalte_1 [, spalte_2 ] …)] AS (subquery)] …
+WITH cte_name [(spalte [, ...])] AS (unterabfrage)
+    [, cte_name [(spalte [, ...])] AS (unterabfrage)] ...
 ```
 
-So benutzt du den `WITH`-Operator:
-
-1. Schreibe den Operator `WITH`.
-2. Gib den Namen der Common Table Expression an.
-3. Optional: Definiere durch Kommas getrennte Spaltennamen für die entstehende CTE.
-4. Schreibe `AS` und dahinter die Subquery, deren Ergebnis du an anderer Stelle der SQL-Query über den in Schritt 2 vergebenen Namen verwenden kannst.
-5. Optional: Wenn du mehr als eine CTE brauchst, setze ein Komma und wiederhole die Schritte 2–4.
+- `cte_name` — Der Name der Common Table Expression. Brauchst du mehrere CTEs, trennst du sie durch
+  Kommas.
+- `spalte` (optional) — Spaltennamen der CTE, durch Kommas getrennt. Lässt du sie weg, werden sie aus der
+  Subquery übernommen.
+- `unterabfrage` (Unterabfrage) — Die Subquery, deren Ergebnis du an anderer Stelle der SQL-Query über den Namen
+  `cte_name` verwenden kannst.
 
 ## Beispiel-Queries
 
@@ -110,23 +109,37 @@ Eine rekursive CTE besteht aus zwei Teilen, die durch `UNION ALL` getrennt werde
 - Der rekursive Teil: eine Query, die sich auf die CTE selbst bezieht, um die Rekursion fortzusetzen.
 
 ```sql
-WITH RECURSIVE cte_name (spalte_1, spalte_2, ...) AS (
+WITH RECURSIVE cte_name [(spalte [, ...])] AS (
     -- Startdatensatz
-    SELECT spalte_1, spalte_2, ...
-    FROM tabelle
-    WHERE bedingung
+    SELECT ausdruck [, ...]
+    FROM tabellen_name
+    [WHERE bedingung]
 
     UNION ALL
 
     -- Rekursiver Teil
-    SELECT spalte_1, spalte_2, ...
+    SELECT ausdruck [, ...]
     FROM cte_name
-    INNER JOIN tabelle ON cte_name.spalte = tabelle.spalte
-    WHERE bedingung
+    INNER JOIN tabellen_name ON verbund_bedingung
+    [WHERE bedingung]
 )
 
 SELECT * FROM cte_name;
 ```
+
+- `cte_name` — Der Name der CTE. Der rekursive Teil bezieht sich auf ihn, um die Rekursion
+  fortzusetzen.
+- `spalte` (optional) — Die Spaltennamen der CTE. Ohne Liste werden die Namen aus dem Startdatensatz
+  übernommen.
+- `ausdruck` — Spalten und Berechnungen, die jeder Teil auswählt. Beide Teile müssen gleich viele
+  Spalten liefern. Die Spaltentypen legt der Startdatensatz fest, die Werte des
+  rekursiven Teils müssen dazu passen. Im rekursiven Teil steht oft eine Berechnung wie
+  `level + 1`.
+- `tabellen_name` — Die Tabelle mit den Ausgangsdaten, zum Beispiel `Employees`.
+- `verbund_bedingung` — Wie die Zeilen der Tabelle mit den Zeilen aus dem vorherigen Schritt verknüpft sind,
+  zum Beispiel `e.managerId = s.id`.
+- `bedingung` (optional) — Filtert Zeilen: im Startdatensatz, mit welchen Zeilen es losgeht, im rekursiven Teil,
+  welche Zeilen im nächsten Schritt hinzukommen.
 
 ### Beispiel: Hierarchie von Vorgesetzten und Untergebenen
 

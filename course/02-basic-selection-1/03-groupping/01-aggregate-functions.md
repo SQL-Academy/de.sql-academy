@@ -14,10 +14,17 @@ Sprechen wir jetzt ausführlicher darüber 🐳.
 ## Allgemeine Struktur einer Query mit Aggregatfunktion
 
 ```sql
-SELECT [Literale, Aggregatfunktionen, Gruppierungsfelder]
+SELECT { literal | aggregatfunktion | gruppierungsfeld } [, ...]
 FROM tabellen_name
-GROUP BY gruppierungsfelder;
+GROUP BY gruppierungsfeld [, ...];
 ```
+
+- `literal` — Ein fester Wert wie `'text'` oder `1`. Er ist für alle Gruppen gleich.
+- `aggregatfunktion` — Eine Funktion, die aus allen Zeilen einer Gruppe einen Wert berechnet, zum Beispiel
+  `AVG(price)`.
+- `gruppierungsfeld` — Die Spalte, nach der die Zeilen in Gruppen aufgeteilt werden: Zeilen mit gleichem Wert
+  landen in einer Gruppe. Du kannst mehrere Spalten durch Kommas getrennt angeben.
+- `tabellen_name` — Die Tabelle, deren Zeilen gruppiert werden.
 
 So sieht zum Beispiel eine Query mit der Aggregatfunktion `AVG` aus:
 

@@ -32,8 +32,13 @@ Für solche nicht-trivialen Suchen in Stringfeldern brauchst du den `LIKE`-Opera
 ## Syntax
 
 ```sql
-... WHERE tabellen_feld [NOT] LIKE muster_string
+WHERE tabellen_feld [NOT] LIKE muster_string
 ```
+
+- `tabellen_feld` — Die Textspalte, deren Werte mit dem Muster verglichen werden.
+- `NOT` (Schlüsselwort, optional) — Kehrt die Bedingung um: Es bleiben die Zeilen, die nicht zum Muster passen.
+- `muster_string` — Ein String in Anführungszeichen, dem der Wert ähneln soll, zum Beispiel
+  `'%@hotmail.%'`.
 
 Das Muster kann zwei Sonderzeichen enthalten — `%` und `_`. Das bedeutet jeweils:
 
@@ -109,8 +114,13 @@ Wenn du statt des Standardzeichens ein anderes Escape-Zeichen verwenden möchtes
 ### Syntax mit ESCAPE
 
 ```sql
-... WHERE tabellen_feld LIKE 'muster_string' ESCAPE 'escape_zeichen'
+WHERE tabellen_feld LIKE muster_string ESCAPE escape_zeichen
 ```
+
+- `tabellen_feld` — Die Textspalte, deren Werte mit dem Muster verglichen werden.
+- `muster_string` — Das Suchmuster. Das Escape-Zeichen vor `%` oder `_` macht sie zu gewöhnlichen Zeichen.
+- `escape_zeichen` — Ein einzelnes Zeichen, das in diesem Muster statt `\` die Zeichen `%` und `_` escapt,
+  zum Beispiel `'!'`.
 
 Dieselbe Query lässt sich mit explizit angegebenem Escape-Zeichen auch so schreiben:
 

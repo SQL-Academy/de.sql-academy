@@ -16,6 +16,8 @@ Eine Datenbank legst du mit folgender Syntax an:
 CREATE DATABASE datenbank_name;
 ```
 
+- `datenbank_name` — Der Name der neuen Datenbank.
+
 **MySQL**
 
 Im Namen einer Datenbank verwendet man üblicherweise Buchstaben, Ziffern sowie die Zeichen „\_" und „$". Die maximale Länge beträgt 64 Zeichen.
@@ -63,6 +65,8 @@ Eine Datenbank löschst du mit `DROP DATABASE`:
 DROP DATABASE datenbank_name;
 ```
 
+- `datenbank_name` — Die Datenbank, die samt allen Tabellen gelöscht wird.
+
 **PostgreSQL**
 
 > Du kannst keine Datenbank löschen, mit der deine aktuelle Sitzung verbunden ist. Auch wenn andere aktive Sitzungen mit der Datenbank verbunden sind, schlägt das Löschen fehl.
@@ -79,11 +83,19 @@ Wenn wir eine Datenbank also nur erstellen wollen, falls sie noch nicht existier
 CREATE DATABASE IF NOT EXISTS datenbank_name;
 ```
 
+- `IF NOT EXISTS` (Schlüsselwort) — Die Datenbank wird nur angelegt, wenn es noch keine mit diesem Namen gibt. Sonst macht
+  die Query nichts und bricht nicht mit einem Fehler ab.
+- `datenbank_name` — Der Name der neuen Datenbank.
+
 Wenn wir eine Datenbank nur löschen wollen, falls sie existiert, sieht das so aus:
 
 ```sql
 DROP DATABASE IF EXISTS datenbank_name;
 ```
+
+- `IF EXISTS` (Schlüsselwort) — Die Datenbank wird nur gelöscht, wenn sie existiert. Sonst macht die Query nichts und
+  bricht nicht mit einem Fehler ab.
+- `datenbank_name` — Die Datenbank, die gelöscht wird.
 
 **PostgreSQL**
 
@@ -96,3 +108,7 @@ Zum Löschen einer Datenbank kannst du `IF EXISTS` verwenden:
 ```sql
 DROP DATABASE IF EXISTS datenbank_name;
 ```
+
+- `IF EXISTS` (Schlüsselwort) — Die Datenbank wird nur gelöscht, wenn sie existiert. Sonst macht die Query nichts und
+  bricht nicht mit einem Fehler ab.
+- `datenbank_name` — Die Datenbank, die gelöscht wird.

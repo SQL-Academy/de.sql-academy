@@ -102,6 +102,12 @@ Um solche Duplikate beim Abfragen zu vermeiden, gibt es den `DISTINCT`-Operator.
 SELECT [DISTINCT] tabellen_felder FROM tabellen_name;
 ```
 
+- `DISTINCT` (Schlüsselwort, optional) — Behält im Ergebnis nur eindeutige Zeilen: Von mehreren gleichen Zeilen wird eine
+  ausgegeben.
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen. Die Eindeutigkeit wird über alle angegebenen
+  Spalten zusammen geprüft.
+- `tabellen_name` — Die Tabelle, aus der die Daten ausgewählt werden.
+
 > Eckige Klammern in der Syntaxbeschreibung markieren einen optionalen Teil der Query. In der SQL-Query selbst werden sie nicht geschrieben.
 
 In unserem Fall sieht die Query für alle einzigartigen Klassen, in denen mindestens ein Schüler ist, also so aus:

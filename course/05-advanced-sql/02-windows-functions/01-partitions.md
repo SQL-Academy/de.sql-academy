@@ -26,11 +26,17 @@ können wir in einer separaten Spalte etwa den Durchschnittspreis pro Unterkunft
 Um eine Partition zusammen mit einer Window Function zu verwenden, hältst du dich an folgende Syntax:
 
 ```sql
-SELECT <window_function>(<tabellen_feld>)
+SELECT window_funktion(tabellen_feld)
 OVER (
-    PARTITION BY <spalten_zum_partitionieren>
+    PARTITION BY partitions_spalte [, ...]
 )
 ```
+
+- `window_funktion` — Die Funktion, die über das Fenster berechnet wird, zum Beispiel `AVG` oder `SUM`.
+- `tabellen_feld` — Die Spalte, deren Werte an die Funktion übergeben werden, zum Beispiel `price` in
+  `AVG(price)`.
+- `partitions_spalte` — Die Spalte, nach der die Zeilen in Partitionen aufgeteilt werden: Zeilen mit gleichem
+  Wert landen in derselben. Du kannst mehrere Spalten mit Komma angeben.
 
 ### Beispiel
 

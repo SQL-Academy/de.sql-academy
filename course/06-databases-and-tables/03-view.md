@@ -124,20 +124,34 @@ WHERE table_name = 'viewusers';
 
 ```sql
 CREATE [OR REPLACE]
-VIEW view_name [(view_spalten_namen)]
-AS select_ausdruck
+VIEW view_name [(view_spalte [, ...])]
+AS select_ausdruck;
 ```
 
-`OR REPLACE` — wird dieser optionale Parameter verwendet und existiert bereits eine View mit diesem Namen, wird die alte View gelöscht und eine neue erstellt. Andernfalls tritt beim Versuch, eine View mit einem bereits existierenden Namen anzulegen, ein Fehler auf.
+- `OR REPLACE` (Schlüsselwort, optional) — Gibt es schon eine View mit diesem Namen, wird sie durch die neue ersetzt. Ohne diesen
+  Teil bricht das Anlegen einer View mit einem vergebenen Namen mit einem Fehler ab.
+- `view_name` — Der Name der neuen View. Über ihn sprichst du die View in Queries an, wie eine
+  Tabelle.
+- `view_spalte` (optional) — Die Spaltennamen der View. Lässt du sie weg, übernehmen die Spalten die Namen aus der
+  `SELECT`-Query.
+- `select_ausdruck` (Unterabfrage) — Die `SELECT`-Query, deren Ergebnis die View zeigt.
 
 **PostgreSQL**
 
 ```sql
-CREATE [OR REPLACE] VIEW view_name [(view_spalten_namen)]
-AS select_ausdruck
+CREATE [OR REPLACE] VIEW view_name [(view_spalte [, ...])]
+AS select_ausdruck;
 ```
 
-`OR REPLACE` — wird dieser optionale Parameter verwendet und existiert bereits eine View mit diesem Namen, wird die alte View gelöscht und eine neue erstellt. Andernfalls tritt beim Versuch, eine View mit einem bereits existierenden Namen anzulegen, ein Fehler auf.
+- `OR REPLACE` (Schlüsselwort, optional) — Gibt es schon eine View mit diesem Namen, wird sie durch die neue ersetzt. Ohne diesen
+  Teil bricht das Anlegen einer View mit einem vergebenen Namen mit einem Fehler ab. Die
+  neue Query muss dieselben Spalten in derselben Reihenfolge liefern, neue Spalten
+  kannst du nur am Ende hinzufügen.
+- `view_name` — Der Name der neuen View. Über ihn sprichst du die View in Queries an, wie eine
+  Tabelle.
+- `view_spalte` (optional) — Die Spaltennamen der View. Lässt du sie weg, übernehmen die Spalten die Namen aus der
+  `SELECT`-Query.
+- `select_ausdruck` (Unterabfrage) — Die `SELECT`-Query, deren Ergebnis die View zeigt.
 
 ## Wofür Views nützlich sind
 

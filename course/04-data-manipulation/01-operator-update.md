@@ -12,10 +12,15 @@ Um vorhandene Datensätze in Tabellen zu ändern, gibt es den SQL-Operator `UPDA
 
 ```sql
 UPDATE tabellen_name
-SET tabellen_feld1 = wert_des_tabellen_felds1,
-    tabellen_feldN = wert_des_tabellen_feldsN
-[WHERE auswahl_bedingung]
+SET tabellen_feld = wert [, ...]
+[WHERE auswahl_bedingung];
 ```
+
+- `tabellen_name` — Die Tabelle, deren Datensätze geändert werden.
+- `tabellen_feld` — Die Spalte, die einen neuen Wert bekommt. Du kannst mehrere Paare `tabellen_feld =
+    wert` durch Kommas getrennt angeben.
+- `wert` — Der neue Wert: eine Zahl, ein String, ein Ausdruck wie `price * 1.1` oder `NULL`.
+- `auswahl_bedingung` (optional) — Welche Zeilen geändert werden. Ohne `WHERE` werden alle Zeilen der Tabelle geändert.
 
 Wenn du zum Beispiel den Namen ändern möchtest, sieht die Query so aus:
 

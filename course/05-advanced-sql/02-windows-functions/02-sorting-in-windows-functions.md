@@ -80,13 +80,23 @@ Genau das wollten wir. Aber was hat sich durch `ORDER BY start_date` geändert?
 Wie wir wissen, sieht die vollständige Syntax einer Window Function so aus:
 
 ```sql
-SELECT <window_function>(<tabellen_feld>)
+SELECT window_funktion(tabellen_feld)
 OVER (
-      [PARTITION BY <spalten_zum_partitionieren>]
-      [ORDER BY <spalten_zum_sortieren>]
-      [ROWS|RANGE <definition_des_zeilen_bereichs>]
+    [PARTITION BY partitions_spalte [, ...]]
+    [ORDER BY sortier_spalte [, ...]]
+    [{ROWS | RANGE} fensterrahmen]
 )
 ```
+
+- `window_funktion` — Die Funktion, die über das Fenster berechnet wird, zum Beispiel `AVG` oder `SUM`.
+- `tabellen_feld` — Die Spalte, deren Werte an die Funktion übergeben werden, zum Beispiel `price` in
+  `AVG(price)`.
+- `partitions_spalte` (optional) — Teilt die Ergebnismenge in nicht überlappende Partitionen: In jede kommen die Zeilen
+  mit gleichen Werten in diesen Spalten.
+- `sortier_spalte` (optional) — Legt die Reihenfolge der Zeilen im Fenster fest. Besonders wichtig ist das bei
+  Rang-Window-Funktionen.
+- `fensterrahmen` (optional) — Legt den Fensterrahmen fest: wie viele Zeilen vor und nach der aktuellen Zeile
+  aufgenommen werden.
 
 Neben `PARTITION BY` und `ORDER BY` gibt es darin den optionalen Block `ROWS|RANGE`. Den schauen wir uns
 im nächsten Artikel im Detail an, jetzt ist erst einmal wichtig, wozu er dient. Er erlaubt es, einen Fensterrahmen relativ zur aktuellen Zeile festzulegen,

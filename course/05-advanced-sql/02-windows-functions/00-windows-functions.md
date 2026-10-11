@@ -51,25 +51,27 @@ Und jetzt schauen wir uns an, wie die Window-Funktion bei verschiedenen übergeb
 ## Syntax einer Window-Funktion
 
 ```sql
-SELECT <window_funktion>(<tabellenfeld>)
+SELECT window_funktion(tabellen_feld)
 OVER (
-      [PARTITION BY <spalten_zum_partitionieren>]
-      [ORDER BY <spalten_zum_sortieren>]
-      [ROWS|RANGE <definition_des_zeilenbereichs>]
+    [PARTITION BY partitions_spalte [, ...]]
+    [ORDER BY sortier_spalte [, ...]]
+    [{ROWS | RANGE} fensterrahmen]
 )
 ```
 
-Wobei:
+- `window_funktion` — Die Funktion, die über das Fenster berechnet wird, zum Beispiel `AVG` oder `SUM`.
+- `tabellen_feld` — Die Spalte, deren Werte an die Funktion übergeben werden, zum Beispiel `price` in
+  `AVG(price)`.
+- `partitions_spalte` (optional) — Teilt die Ergebnismenge in nicht überlappende Partitionen: In jede kommen die Zeilen
+  mit gleichen Werten in diesen Spalten.
+- `sortier_spalte` (optional) — Legt die Reihenfolge der Zeilen im Fenster fest. Besonders wichtig ist das bei
+  Rang-Window-Funktionen.
+- `fensterrahmen` (optional) — Legt den Fensterrahmen fest: wie viele Zeilen vor und nach der aktuellen Zeile
+  aufgenommen werden.
 
-- `<window_funktion>(<tabellenfeld>)` — die verwendete Window-Funktion. Zum Beispiel `AVG(price)`.
-- Danach folgt `OVER`, das das Fenster (die Gruppe von Zeilen) definiert, das an die Window-Funktion übergeben wird. Bleibt die Konstruktion `OVER ()` ohne Parameter, enthält das Fenster alle Zeilen des Abfrageergebnisses.
+`OVER` definiert das Fenster (die Gruppe von Zeilen), das an die Window-Funktion übergeben wird. Bleibt die Konstruktion `OVER ()` ohne Parameter, enthält das Fenster alle Zeilen des Abfrageergebnisses.
 
-Innerhalb von `OVER` folgen dann 3 optionale Parameter, mit denen sich das Fenster flexibel konfigurieren lässt:
-
-- mit `PARTITION BY <spalten_zum_partitionieren>` wird die Ergebnismenge in nicht überlappende Teilmengen aufgeteilt, wobei jede Teilmenge Zeilen mit gleichen Werten in einer oder mehreren Spalten enthält. So entstehen Partitionen.
-- mit `ORDER BY <spalten_zum_sortieren>` wird die Reihenfolge der Zeilen innerhalb des Fensters festgelegt. Das spielt besonders bei Rang-Window-Funktionen eine wichtige Rolle.
-- mit `ROWS|RANGE <definition_des_zeilenbereichs>` wird der Fensterrahmen festgelegt. Mit diesem Parameter lässt sich angeben, wie viele Zeilen vor und nach der aktuellen Zeile aufgenommen werden.
-
+Innerhalb von `OVER` folgen 3 optionale Parameter, mit denen sich das Fenster flexibel konfigurieren lässt.
 Auf jeden dieser Parameter gehen wir in den folgenden Artikeln genauer ein.
 
 ## Beispiel für die Verwendung einer Window-Funktion

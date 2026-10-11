@@ -46,12 +46,26 @@ Mit der Syntax `ROWS` oder `RANGE` können wir festlegen, welcher Fensterrahmen 
 Die Syntax zur Definition der Grenzen des Fensterrahmens sieht aus wie die Angabe eines Bereichs relativ zur aktuellen Zeile.
 
 ```sql
-SELECT <window_funktion>(<tabellenfeld>)
+SELECT window_funktion(tabellen_feld)
 OVER (
-      ...
-      ROWS|RANGE BETWEEN <anfang des rahmens> AND <ende des rahmens>
+    [PARTITION BY partitions_spalte [, ...]]
+    [ORDER BY sortier_spalte [, ...]]
+    {ROWS | RANGE} BETWEEN rahmen_anfang AND rahmen_ende
 )
 ```
+
+- `window_funktion` — Die Funktion, die über das Fenster berechnet wird, zum Beispiel `AVG` oder `SUM`.
+- `tabellen_feld` — Die Spalte, deren Werte an die Funktion übergeben werden, zum Beispiel `price` in
+  `AVG(price)`.
+- `partitions_spalte` (optional) — Teilt die Ergebnismenge in nicht überlappende Partitionen: In jede kommen die Zeilen
+  mit gleichen Werten in diesen Spalten.
+- `sortier_spalte` (optional) — Legt die Reihenfolge der Zeilen im Fenster fest. Besonders wichtig ist das bei
+  Rang-Window-Funktionen.
+- `ROWS | RANGE` (Schlüsselwort) — Wie die Grenzen gezählt werden: `ROWS` nach Zeilen, `RANGE` nach den Werten der
+  Sortierspalten.
+- `rahmen_anfang` — Die Grenze, an der der Rahmen beginnt, zum Beispiel `2 PRECEDING`. Die möglichen
+  Varianten findest du weiter unten.
+- `rahmen_ende` — Die Grenze, an der der Rahmen endet, zum Beispiel `CURRENT ROW`.
 
 Wenn wir zum Beispiel wollen, dass bei den Berechnungen nur die zwei vorhergehenden Datensätze und die aktuelle Zeile in die Window-Funktion einfließen, sieht die Syntax so aus:
 

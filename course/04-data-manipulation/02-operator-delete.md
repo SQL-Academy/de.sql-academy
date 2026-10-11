@@ -16,9 +16,10 @@ DELETE FROM tabellen_name
 [WHERE auswahl_bedingung];
 ```
 
-Fehlt die Auswahlbedingung `WHERE`, werden alle Datensätze der angegebenen Tabelle gelöscht.
+- `tabellen_name` — Die Tabelle, aus der Datensätze gelöscht werden.
+- `auswahl_bedingung` (optional) — Welche Zeilen gelöscht werden. Ohne `WHERE` werden alle Zeilen der Tabelle gelöscht.
 
-Die gleiche Operation (alle Datensätze löschen) lässt sich auch über `TRUNCATE` erledigen.
+Alle Datensätze einer Tabelle kannst du auch mit `TRUNCATE` löschen.
 Dieser Operator löscht die Tabelle und legt sie neu an – das geht deutlich schneller als das Löschen aller Datensätze nacheinander (wie bei `DELETE`), insbesondere bei großen Tabellen.
 
 ## Allgemeine Struktur einer TRUNCATE-Query
@@ -26,6 +27,8 @@ Dieser Operator löscht die Tabelle und legt sie neu an – das geht deutlich sc
 ```sql
 TRUNCATE TABLE tabellen_name;
 ```
+
+- `tabellen_name` — Die Tabelle, die komplett geleert wird.
 
 **MySQL**
 
@@ -49,25 +52,42 @@ TRUNCATE TABLE tabellen_name;
 
 ## Datensätze in Multi-Table-Queries löschen
 
-Verwendet eine `DELETE`-Query einen `JOIN`, musst du angeben, aus welchen Tabellen Datensätze gelöscht werden sollen.
-
 **MySQL**
 
+Verwendet eine `DELETE`-Query einen `JOIN`, musst du angeben, aus welchen Tabellen Datensätze gelöscht werden sollen.
+
 ```sql
-DELETE tabellen_name_1 FROM
+DELETE tabellen_name_1 [, tabellen_name_2] FROM
 tabellen_name_1 JOIN tabellen_name_2
-ON tabellen_name_1.feld = tabellen_name_2.feld
+ON verbund_bedingung
 [WHERE auswahl_bedingung];
 ```
 
+- `tabellen_name_1` — Die Tabelle, aus der Datensätze gelöscht werden. Ihr Name steht sowohl nach `DELETE`
+  als auch im `JOIN`.
+- `tabellen_name_2` — Die verknüpfte Tabelle, anhand deren Daten die zu löschenden Datensätze ausgewählt
+  werden. Gibst du sie auch nach `DELETE` an, werden Datensätze aus beiden Tabellen
+  gelöscht.
+- `verbund_bedingung` — Wie die Zeilen verknüpft sind, z. B. `tabellen_name_1.feld = tabellen_name_2.feld`.
+- `auswahl_bedingung` (optional) — Welche Datensätze gelöscht werden. Die Bedingung kann Spalten beider Tabellen prüfen.
+
 **PostgreSQL**
+
+Verwendet eine `DELETE`-Query `USING`, gibst du danach die zusätzlichen Tabellen an, anhand derer die zu löschenden Datensätze ausgewählt werden.
 
 ```sql
 DELETE FROM tabellen_name_1
 USING tabellen_name_2
-WHERE tabellen_name_1.feld = tabellen_name_2.feld
+WHERE verbund_bedingung
 [AND auswahl_bedingung];
 ```
+
+- `tabellen_name_1` — Die Tabelle, aus der Datensätze gelöscht werden.
+- `tabellen_name_2` — Eine zusätzliche Tabelle, anhand deren Daten die zu löschenden Datensätze ausgewählt
+  werden. Aus ihr selbst wird nichts gelöscht.
+- `verbund_bedingung` — Wie die Zeilen verknüpft sind, z. B. `tabellen_name_1.feld = tabellen_name_2.feld`.
+- `auswahl_bedingung` (optional) — Eine zusätzliche Bedingung: welche der verknüpften Datensätze gelöscht werden. Sie
+  kann Spalten beider Tabellen prüfen.
 
 Angenommen, wir wollen alle Reservierungen für Unterkünfte ohne Küche löschen. Die Query sieht dann so aus:
 

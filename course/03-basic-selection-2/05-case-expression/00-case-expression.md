@@ -72,14 +72,17 @@ FROM Student
 
 ```sql
 CASE
-    WHEN bedingung_1 THEN rueckgabe_wert_1
-    WHEN bedingung_2 THEN rueckgabe_wert_2
-    WHEN bedingung_n THEN rueckgabe_wert_n
-    [ELSE standard_rueckgabe_wert]
+    WHEN bedingung THEN ergebnis
+    [WHEN ...]
+    [ELSE standard_ergebnis]
 END
 ```
 
-Wenn `bedingung_1` wahr ist, gibt der `CASE`-Ausdruck `rueckgabe_wert_1` zurück, andernfalls wird `bedingung_2` geprüft und so weiter. Trifft keine der Bedingungen zu, kommt `NULL` zurück – oder `standard_rueckgabe_wert`, falls ein `ELSE`-Zweig angegeben ist.
+- `bedingung` — Ein logischer Ausdruck des `WHEN`-Zweigs, zum Beispiel `price > 100`.
+- `ergebnis` — Der Wert, den `CASE` zurückgibt, wenn die Bedingung des Zweigs wahr ist.
+- `standard_ergebnis` (optional) — Der Wert für den Fall, dass keine Bedingung zutrifft. Ohne `ELSE` kommt `NULL` zurück.
+
+Die `WHEN`-Zweige werden der Reihe nach geprüft: Ist die `bedingung` des ersten Zweigs wahr, gibt der `CASE`-Ausdruck sein `ergebnis` zurück, andernfalls wird der nächste Zweig geprüft und so weiter.
 
 ### Beispiel
 
@@ -154,12 +157,16 @@ weniger flexibel ist. Allgemein sieht sie so aus:
 
 ```sql
 CASE wert
-    WHEN vergleichs_wert_1 THEN rueckgabe_wert_1
-    WHEN vergleichs_wert_2 THEN rueckgabe_wert_2
-    WHEN vergleichs_wert_n THEN rueckgabe_wert_n
-    [ELSE standard_rueckgabe_wert]
+    WHEN vergleichs_wert THEN ergebnis
+    [WHEN ...]
+    [ELSE standard_ergebnis]
 END
 ```
+
+- `wert` — Der Ausdruck, der geprüft wird, zum Beispiel eine Tabellenspalte.
+- `vergleichs_wert` — Ein konkreter Wert des `WHEN`-Zweigs, zum Beispiel eine Zahl oder ein String.
+- `ergebnis` — Der Wert, den `CASE` zurückgibt, wenn `wert` mit dem Wert des Zweigs übereinstimmt.
+- `standard_ergebnis` (optional) — Der Wert für den Fall, dass nichts übereinstimmt. Ohne `ELSE` kommt `NULL` zurück.
 
 Bei dieser Syntax wird `wert` in `CASE` nacheinander mit den in `WHEN` angegebenen Werten verglichen. Stimmt einer überein, wird der Wert nach `THEN` zurückgegeben.
 

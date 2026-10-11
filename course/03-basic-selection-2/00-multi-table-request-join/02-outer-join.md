@@ -209,15 +209,24 @@ MySQL unterstützt `FULL OUTER JOIN` nicht, dasselbe Ergebnis kannst du aber von
 ```sql
 SELECT tabellen_felder
 FROM linke_tabelle
-    LEFT JOIN rechte_tabelle ON rechte_tabelle.key = linke_tabelle.key
+    LEFT JOIN rechte_tabelle ON rechte_tabelle.schluessel = linke_tabelle.schluessel
 
 UNION ALL
 
 SELECT tabellen_felder
 FROM linke_tabelle
-    RIGHT JOIN rechte_tabelle ON rechte_tabelle.key = linke_tabelle.key
-WHERE linke_tabelle.key IS NULL;
+    RIGHT JOIN rechte_tabelle ON rechte_tabelle.schluessel = linke_tabelle.schluessel
+WHERE linke_tabelle.schluessel IS NULL;
 ```
+
+- `tabellen_felder` — Die Spalten, die ins Ergebnis kommen. In beiden Teilen müssen es gleich viele in
+  derselben Reihenfolge sein.
+- `linke_tabelle` — Die linke Tabelle des Verbunds: Auch ihre Zeilen ohne Gegenstück kommen ins Ergebnis.
+- `rechte_tabelle` — Die rechte Tabelle des Verbunds: Auch ihre Zeilen ohne Gegenstück kommen ins Ergebnis.
+- `linke_tabelle.schluessel` — Die Spalte der linken Tabelle, über die ein Gegenstück gesucht wird. Im zweiten Teil
+  lässt `IS NULL` darauf nur die Zeilen der rechten Tabelle ohne Gegenstück übrig.
+- `rechte_tabelle.schluessel` — Die Spalte der rechten Tabelle, deren Wert mit dem Schlüssel der linken übereinstimmen
+  muss.
 
 Die Bedingung im zweiten Teil ist zwingend: ohne sie kämen die Zeilen mit Gegenstück doppelt ins Ergebnis.
 

@@ -16,27 +16,43 @@ Anders als eingebaute Funktionen schreibst du Stored Functions selbst, um spezif
 **MySQL**
 
 ```sql
-CREATE FUNCTION funktions_name(parameter1 TYP, parameter2 TYP, ...)
+CREATE FUNCTION funktions_name([parameter typ [, ...]])
 RETURNS rueckgabe_typ
 BEGIN
     -- Logik der Funktion
-    RETURN ergebnis_der_berechnung;
+    RETURN ergebnis;
 END;
 ```
+
+- `funktions_name` — Der Name, mit dem du die Funktion in Abfragen aufrufst, zum Beispiel `is_adult`.
+- `parameter` (optional) — Der Name eines Eingabewerts, über den du ihn in der Funktion nutzt. Du kannst mehrere
+  Parameter mit Komma angeben oder die Klammern leer lassen, wenn du keine brauchst.
+- `typ` — Der Datentyp des Parameters: `INT`, `DATE`, `VARCHAR(50)` usw.
+- `rueckgabe_typ` — Der Typ des Werts, den die Funktion zurückgibt, zum Beispiel `BOOLEAN` oder `INT`.
+- `ergebnis` — Der Wert oder Ausdruck, den die Funktion zurückgibt. Er wird in den Typ nach `RETURNS`
+  umgewandelt.
 
 **PostgreSQL**
 
 ```sql
-CREATE OR REPLACE FUNCTION funktions_name(parameter1 TYP, parameter2 TYP, ...)
+CREATE OR REPLACE FUNCTION funktions_name([parameter typ [, ...]])
 RETURNS rueckgabe_typ
 LANGUAGE plpgsql
 AS $$
 BEGIN
     -- Logik der Funktion
-    RETURN ergebnis_der_berechnung;
+    RETURN ergebnis;
 END;
 $$;
 ```
+
+- `funktions_name` — Der Name, mit dem du die Funktion in Abfragen aufrufst, zum Beispiel `is_adult`.
+- `parameter` (optional) — Der Name eines Eingabewerts, über den du ihn in der Funktion nutzt. Du kannst mehrere
+  Parameter mit Komma angeben oder die Klammern leer lassen, wenn du keine brauchst.
+- `typ` — Der Datentyp des Parameters: `INT`, `DATE`, `VARCHAR(50)` usw.
+- `rueckgabe_typ` — Der Typ des Werts, den die Funktion zurückgibt, zum Beispiel `BOOLEAN` oder `INT`.
+- `ergebnis` — Der Wert oder Ausdruck, den die Funktion zurückgibt. Er wird in den Typ nach `RETURNS`
+  umgewandelt.
 
 `LANGUAGE plpgsql` — gibt an, dass die Funktion in **PL/pgSQL** geschrieben ist (der prozeduralen Sprache von PostgreSQL).
 

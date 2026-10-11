@@ -15,14 +15,16 @@ darauf also nicht. Für die geordnete Ausgabe nutzt du die Konstruktion `ORDER B
 
 ```sql
 SELECT tabellen_felder FROM tabellen_name
-WHERE ...
-ORDER BY spalte_1 [ASC | DESC][, spalte_n [ASC | DESC]]
+[WHERE bedingung]
+ORDER BY spalte [ASC | DESC] [, ...];
 ```
 
-Dabei steht `ASC` bzw. `DESC` für die Sortierrichtung:
-
-- `ASC` — aufsteigend (Standard)
-- `DESC` — absteigend
+- `tabellen_felder` — Die Spalten, die im Ergebnis landen.
+- `tabellen_name` — Die Tabelle, aus der die Daten ausgewählt werden.
+- `bedingung` (optional) — Welche Zeilen vor dem Sortieren übrig bleiben.
+- `spalte` — Die Spalte, nach deren Werten die Zeilen geordnet werden. Du kannst mehrere Spalten
+  durch Kommas getrennt angeben.
+- `ASC | DESC` (Schlüsselwort, optional) — Die Sortierrichtung: `ASC` aufsteigend (Standard), `DESC` absteigend. Werte: `ASC`, `DESC`.
 
 Holen wir uns zum Beispiel die Namen der Airlines aus der Tabelle `Company` in alphabetischer Reihenfolge:
 
@@ -77,8 +79,12 @@ SELECT name FROM Company ORDER BY name;
 Um nach zwei oder mehr Spalten zu sortieren, listest du sie durch Kommas getrennt auf.
 
 ```sql
-...ORDER BY spalte_1 [ASC | DESC], spalte_2 [ASC | DESC];
+ORDER BY spalte_1 [ASC | DESC], spalte_2 [ASC | DESC];
 ```
+
+- `spalte_1` — Die Spalte, nach der die Zeilen zuerst sortiert werden.
+- `spalte_2` — Die Spalte, nach der Zeilen mit gleichem Wert in `spalte_1` sortiert werden.
+- `ASC | DESC` (Schlüsselwort, optional) — Die Sortierrichtung für die Spalte, hinter der sie steht. Standard ist `ASC`. Werte: `ASC`, `DESC`.
 
 Die Daten werden nach der ersten Spalte sortiert. Treffen mehrere Zeilen mit demselben Wert in der ersten Spalte aufeinander,
 werden sie nach der zweiten Spalte sortiert. Die Anzahl der Spalten, nach denen du sortieren kannst, ist nicht begrenzt.

@@ -35,19 +35,24 @@ Wichtig ist: `LIKE` vergleicht den String mit dem gesamten Muster, während ein 
 **MySQL**
 
 ```sql
-... WHERE table_field REGEXP 'pattern';
+WHERE tabellen_feld REGEXP muster;
 ```
 
-Wobei `pattern` der reguläre Ausdruck ist, der das Suchmuster festlegt.
+- `tabellen_feld` — Die Textspalte, in deren Werten nach einem Treffer gesucht wird.
+- `muster` — Ein regulärer Ausdruck in Anführungszeichen, der das Suchmuster festlegt, zum Beispiel
+  `'^John'`.
 
 **PostgreSQL**
 
 ```sql
-... WHERE table_field ~ 'pattern';   -- mit Berücksichtigung der Groß-/Kleinschreibung
-... WHERE table_field ~* 'pattern';  -- ohne Berücksichtigung der Groß-/Kleinschreibung
+WHERE tabellen_feld {~ | ~*} muster;
 ```
 
-Wobei `pattern` der reguläre Ausdruck ist, der das Suchmuster festlegt.
+- `tabellen_feld` — Die Textspalte, in deren Werten nach einem Treffer gesucht wird.
+- `~ | ~*` — Der Operator für reguläre Ausdrücke: `~` unterscheidet Groß- und Kleinschreibung, `~*`
+  nicht.
+- `muster` — Ein regulärer Ausdruck in Anführungszeichen, der das Suchmuster festlegt, zum Beispiel
+  `'^John'`.
 
 ## Wichtige Details
 
