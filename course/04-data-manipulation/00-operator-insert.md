@@ -1,12 +1,12 @@
 ---
 meta:
     title: "Daten hinzufügen, der INSERT-Operator"
-    description: "Einen neuen Datensatz in SQL hinzufügen. Auto-Increment des Primary Keys beim Erstellen einer Zeile. SQL-Operator INSERT INTO."
+    description: "So fügst du mit INSERT INTO Datensätze in eine SQL-Tabelle ein: Syntax, mehrere Zeilen auf einmal einfügen, Auto-Increment des Primary Keys. Beispiele für MySQL und PostgreSQL."
 ---
 
 # Daten hinzufügen, der INSERT-Operator
 
-Um neue Datensätze in eine Tabelle einzufügen, verwendest du den Operator `INSERT`. Schauen wir uns seine allgemeine Struktur an.
+Bisher haben wir Daten nur gelesen. Aber Daten in Tabellen bleiben nicht stehen: Es kommen neue Produkte, Kunden und Bestellungen hinzu, und für jedes davon braucht eine Tabelle eine neue Zeile. Dafür gibt es den Operator `INSERT`.
 
 ## Allgemeine Struktur einer Query mit INSERT
 
@@ -24,11 +24,11 @@ INSERT INTO tabellen_name [(tabellen_feld [, ...])]
 - `select_ausdruck` (Unterabfrage) — Eine `SELECT`-Query, deren Ergebniszeilen in die Tabelle eingefügt werden. Sie muss so
   viele Spalten liefern, wie du aufgezählt hast.
 
-Werte kannst du entweder direkt mit `VALUES` in Klammern und durch Kommas getrennt auflisten oder über einen `SELECT`-Operator einfügen.
+Die Werte listest du entweder nach `VALUES` auf oder holst sie mit einer `SELECT`-Query.
 
 ## Felder aufzählen und Werte zuordnen
 
-Beim Einsatz des `INSERT`-Operators kannst du explizit angeben, in welche Felder der Tabelle die Daten geschrieben werden. Dazu listest du die Feldnamen in Klammern nach dem Tabellennamen auf:
+Du kannst explizit angeben, in welche Felder der Tabelle die Daten geschrieben werden. Dazu listest du die Feldnamen in Klammern nach dem Tabellennamen auf:
 
 ```sql
 INSERT INTO tabellen_name (tabellen_feld [, ...])
@@ -51,18 +51,18 @@ Wenn die Tabelle `Goods` zum Beispiel die Felder `good_id`, `good_name` und `typ
 ```sql
 -- Explizite Angabe der Felder
 INSERT INTO Goods (good_id, good_name, type)
-VALUES (20, 'Table', 2);
+VALUES (20, 'Table', 8);
 
 -- Geänderte Feldreihenfolge - die Werte werden entsprechend vertauscht
 INSERT INTO Goods (good_name, type, good_id)
-VALUES ('Table', 2, 20);
+VALUES ('Table', 8, 20);
 ```
 
 Gibst du keine Feldliste an, müssen die Werte für **alle** Felder in der Reihenfolge stehen, in der sie beim Erstellen der Tabelle definiert wurden:
 
 ```sql
 INSERT INTO Goods
-VALUES (20, 'Table', 2);
+VALUES (20, 'Table', 8);
 ```
 
 > Es empfiehlt sich, die Feldliste immer explizit anzugeben.
@@ -70,130 +70,131 @@ VALUES (20, 'Table', 2);
 
 ## Unterschiede zwischen den INSERT-Syntaxen
 
-Der `INSERT`-Operator unterstützt zwei Hauptvarianten, um Daten anzugeben:
+Fügen wir der Warenliste einen Tisch hinzu. Dafür gibt es zwei Wege.
+
+ER-Diagramm der Datenbank Family: [auf SQL Academy öffnen](https://sql-academy.org/de/guide/operator-insert).
 
 ### INSERT INTO ... VALUES
 
-Wird für **bereits bekannte** Werte verwendet. Du kannst damit eine oder mehrere Zeilen auf einmal einfügen:
+Die Werte stehen in Klammern nach `VALUES`. Dieser Weg passt, wenn die Daten **im Voraus bekannt** sind:
 
 ```sql
--- Eine Zeile
 INSERT INTO Goods (good_id, good_name, type)
-VALUES (20, 'Table', 2);
+VALUES (20, 'Table', 8);
+```
 
--- Mehrere Zeilen
+So kannst du auch mehrere Zeilen auf einmal einfügen, jede in eigenen Klammern:
+
+```sql
 INSERT INTO Goods (good_id, good_name, type)
 VALUES
-    (20, 'Table', 2),
-    (21, 'Chair', 2),
+    (20, 'Table', 8),
+    (21, 'Chair', 8),
     (22, 'Lamp', 8);
 ```
 
-**Wann benutzen:** für konkrete, statische Daten, die im Voraus bekannt sind.
-
 ### INSERT INTO ... SELECT
 
-Wird verwendet, um Daten einzufügen, die **aus einer Query stammen**. Damit kannst du Daten von einer Tabelle in eine andere kopieren oder die Ergebnisse komplexer Berechnungen einfügen:
+Die Werte liefert eine `SELECT`-Query. Sie kommt sogar ohne Tabelle aus und gibt dann einfach die aufgezählten Werte zurück:
 
 ```sql
 INSERT INTO Goods (good_id, good_name, type)
-SELECT 20, 'Table', 2;
+SELECT 20, 'Table', 8;
+```
 
--- Oder Kopieren aus einer anderen Tabelle
+Meistens brauchst du diesen Weg aber, wenn die Daten **aus der Datenbank stammen**: um vorhandene Zeilen zu kopieren oder Berechnungsergebnisse einzufügen. Duplizieren wir zum Beispiel alle Lebensmittel unter neuen Nummern:
+
+```sql
 INSERT INTO Goods (good_id, good_name, type)
 SELECT good_id + 100, good_name, type
 FROM Goods
 WHERE type = 2;
 ```
 
-**Wann benutzen:** zum Kopieren von Daten zwischen Tabellen, zum Einfügen von Berechnungsergebnissen oder wenn die Daten von vorhandenen Einträgen in der Datenbank abhängen.
+Beide Wege fügen dieselbe Zeile hinzu:
 
-So kannst du neue Datensätze auf folgende Arten hinzufügen:
-
-ER-Diagramm der Datenbank Family: [auf SQL Academy öffnen](https://sql-academy.org/de/guide/operator-insert).
-
-- Mit der Syntax `INSERT INTO ... SELECT`
-
-    ```sql
-    INSERT INTO Goods (good_id, good_name, type)
-    SELECT 20, 'Table', 2;
-    ```
-
-- Mit der Syntax `INSERT INTO ... VALUES (...)`
-
-    ```sql
-    INSERT INTO Goods (good_id, good_name, type)
-    VALUES (20, 'Table', 2);
-    ```
-
-Beide Queries liefern dasselbe Ergebnis:
-
-| good_id | good_name          | type |
-| ------- | ------------------ | ---- |
-| 1       | apartment fee      | 1    |
-| 2       | phone fee          | 1    |
-| 3       | bread              | 2    |
-| 4       | milk               | 2    |
-| 5       | red caviar         | 3    |
-| 6       | cinema             | 4    |
-| 7       | black caviar       | 3    |
-| 8       | cough tablets      | 5    |
-| 9       | potato             | 2    |
-| 10      | pineapples         | 3    |
-| 11      | television         | 8    |
-| 12      | vacuum cleaner     | 8    |
-| 13      | jacket             | 7    |
-| 14      | fur coat           | 7    |
-| 15      | music school fee   | 6    |
-| 16      | english school fee | 6    |
-| 20      | Table              | 2    |
+| good_id | good_name            | type  |
+| ------- | -------------------- | ----- |
+| 1       | apartment fee        | 1     |
+| 2       | phone fee            | 1     |
+| 3       | bread                | 2     |
+| 4       | milk                 | 2     |
+| 5       | red caviar           | 3     |
+| 6       | cinema               | 4     |
+| 7       | black caviar         | 3     |
+| 8       | cough tablets        | 5     |
+| 9       | potato               | 2     |
+| 10      | pineapples           | 3     |
+| 11      | television           | 8     |
+| 12      | vacuum cleaner       | 8     |
+| 13      | jacket               | 7     |
+| 14      | fur coat             | 7     |
+| 15      | music school fee     | 6     |
+| 16      | english school fee   | 6     |
+| 17      | airsoft game session | 4     |
+| 18      | netflix subscription | 4     |
+| **20**  | **Table**            | **8** |
 
 ## Primary Key beim Einfügen eines neuen Datensatzes
 
-Denk daran, dass der Primary Key einer Tabelle eindeutig sein muss. Das Einfügen eines bereits vorhandenen Werts führt zu einem Fehler.
+Ein Wert des Primary Keys darf sich in einer Tabelle nicht wiederholen: Der Versuch, einen vorhandenen einzufügen, endet mit einem Fehler.
 
-Beim Anlegen neuer Datensätze mit eindeutigen Indizes ist es nicht immer einfach, einen passenden eindeutigen Wert zu wählen.
-Eine Möglichkeit ist eine zusätzliche Query, die den größten vorhandenen Wert des Primary Keys ermittelt, um daraus einen neuen eindeutigen Wert abzuleiten.
+Welche Nummer ist also frei? Am naheliegendsten ist es, die größte zu nehmen und eins zu addieren:
 
 ```sql
-INSERT INTO Goods SELECT MAX(good_id) + 1, 'Table', 2 FROM Goods;
+INSERT INTO Goods SELECT MAX(good_id) + 1, 'Table', 8 FROM Goods;
 ```
 
-Hier nutzen wir die Funktion `MAX`, um den maximalen Wert des Primary Keys zu ermitteln. Das ist allerdings nicht der zuverlässigste und universellste Ansatz: Er funktioniert am besten mit numerischen Datentypen, für alle anderen wird die Umsetzung schnell unhandlich. Außerdem kannst du so einen Wert erhalten, der zuvor in der Tabelle existierte und gelöscht wurde. Das kann zu Inkonsistenzen in den Daten führen 💥, daher solltest du in echten Projekten lieber eine alternative Methode verwenden.
+Das funktioniert, ist aber unzuverlässig. Laufen zwei solche Queries gleichzeitig, können sie dieselbe Nummer bekommen, und eine von ihnen endet mit einem Fehler. Außerdem klappt das nur mit numerischen Schlüsseln und kann eine Nummer vergeben, die früher zu einem gelöschten Datensatz gehörte. Wenn alte Daten irgendwo noch auf diese Nummer verweisen, hängen sie plötzlich an der neuen Zeile 💥. Deshalb vergibt in echten Projekten die Datenbank selbst die Nummer.
 
 ## Automatische Generierung des Primary Keys
 
 **MySQL**
 
-MySQL bringt einen Mechanismus zur automatischen Generierung des Primary Keys mit. Dazu reicht es, dem Primary Key `good_id` das Attribut `AUTO_INCREMENT` zu geben.
-Beim Anlegen eines neuen Datensatzes kannst du dann als Wert für `good_id` einfach `NULL` oder `0` übergeben — das Feld erhält automatisch einen Wert, der um eins größer ist als der vorherige.
+Der Primary Key kann automatisch generiert werden. Dazu reicht es, der Spalte `good_id` das Attribut `AUTO_INCREMENT` zu geben.
+Beim Anlegen eines neuen Datensatzes kannst du dann als Wert für `good_id` einfach `NULL` oder `0` übergeben — das Feld erhält automatisch den nächsten Zählerwert: um eins größer als der größte bisher verwendete.
 
 ```sql
 CREATE TABLE Goods (
-	good_id INT NOT NULL AUTO_INCREMENT,
+	good_id INT NOT NULL AUTO_INCREMENT PRIMARY KEY,
 	good_name VARCHAR(255),
 	type INT
 );
 ```
 
 ```sql
-INSERT INTO Goods VALUES (NULL, 'Table', 2);
+INSERT INTO Goods VALUES (NULL, 'Table', 8);
 ```
 
 **PostgreSQL**
 
-PostgreSQL bietet ebenfalls einen Mechanismus zur automatischen Vergabe eindeutiger Identifikatoren.
+Eindeutige Identifikatoren können automatisch vergeben werden.
 Dafür stehen die Typen `SMALLSERIAL`, `SERIAL` und `BIGSERIAL` zur Verfügung. Das sind keine echten Datentypen, sondern eher eine bequeme Kurzschreibweise für Spalten mit eindeutigem Identifikator.
 Eine Spalte mit einem dieser Typen ist eine Ganzzahl und wird beim Einfügen eines neuen Datensatzes automatisch hochgezählt.
 
 ```sql
 CREATE TABLE Goods (
-	good_id SERIAL,
+	good_id SERIAL PRIMARY KEY,
 	good_name VARCHAR(255),
 	type INT
 );
 ```
 
 ```sql
-INSERT INTO Goods (good_name, type) VALUES ('Table', 2);
+INSERT INTO Goods (good_name, type) VALUES ('Table', 8);
 ```
+
+## Prüf dich selbst
+
+In der Tabelle `Goods` gibt es bereits eine Ware mit `good_id = 3`, und `good_id` ist der Primary Key. Was passiert, wenn du diese Query ausführst?
+
+```sql
+INSERT INTO Goods (good_id, good_name, type)
+VALUES (3, 'chair', 8);
+```
+
+1. In der Tabelle gibt es danach zwei Zeilen mit good_id = 3 — Der Primary Key ist eindeutig: Eine Tabelle kann keine zwei Zeilen mit demselben Schlüsselwert enthalten.
+
+2. Die Zeile mit good_id = 3 wird durch die neue ersetzt — Ein einfaches INSERT fügt nur Zeilen hinzu und ändert keine bestehenden. Zum Ändern von Datensätzen gibt es den UPDATE-Operator.
+
+3. **Richtige Antwort:** Die Query bricht mit einem Fehler ab — Der Primary-Key-Wert 3 ist bereits vergeben, deshalb lehnt das DBMS das Einfügen ab und meldet einen doppelten Schlüssel.

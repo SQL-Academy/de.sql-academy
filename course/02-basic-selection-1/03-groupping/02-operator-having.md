@@ -125,14 +125,14 @@ Um zu diesem Ergebnis zu kommen, müssen wir:
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     ```
 
 - anschließend die Datensätze der Unterkünfte nach Typ gruppieren
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     ```
 
@@ -140,7 +140,7 @@ Um zu diesem Ergebnis zu kommen, müssen wir:
 
     ```sql
     SELECT ... FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     HAVING COUNT(*) >= 5
     ```
@@ -149,7 +149,7 @@ Um zu diesem Ergebnis zu kommen, müssen wir:
   den Namen des Unterkunftstyps und seinen Mindestpreis.
     ```sql
     SELECT home_type, MIN(price) as min_price FROM Rooms
-    WHERE has_tv = True
+    WHERE has_tv = true
     GROUP BY home_type
     HAVING COUNT(*) >= 5;
     ```

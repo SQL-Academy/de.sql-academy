@@ -9,8 +9,9 @@ meta:
 ## Besonderheiten von NULL:
 
 - `NULL` ist nicht dasselbe wie ein leerer String oder die Zahl Null.
-- Operationen mit `NULL` liefern `NULL`.
-- Der Vergleich `NULL` = `NULL` ergibt `FALSE`.
+- Arithmetik, Vergleiche und die meisten Funktionen liefern `NULL`, wenn einer der Operanden `NULL` ist: `5 + NULL` ergibt `NULL`.
+- Auch der Vergleich `NULL = NULL` ergibt `NULL` und nicht `true`: Ob zwei unbekannte Werte gleich sind, ist unbekannt. Deshalb findet `WHERE feld = NULL` keine einzige Zeile – verwende stattdessen `IS NULL`.
+- Logische Operatoren sind eine Ausnahme: `NULL OR true` ergibt `true` und `NULL AND false` ergibt `false`.
 
 ## Mit NULL arbeiten
 
@@ -57,4 +58,4 @@ SELECT * FROM employees WHERE birth_date IS NOT NULL;
     IFNULL(value, alternative_value)
     ```
 
-Eine ausführliche Analyse mit Beispielen finden Sie im Artikel [„COALESCE in SQL: NULL ersetzen und das NULLIF-Duo“](https://sql-academy.org/de/blog/sql-coalesce).
+Eine ausführliche Analyse mit Beispielen findest du im Artikel [„COALESCE in SQL: NULL ersetzen und das NULLIF-Duo“](https://sql-academy.org/de/blog/sql-coalesce).

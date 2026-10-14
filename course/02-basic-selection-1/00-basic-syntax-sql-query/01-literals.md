@@ -147,11 +147,11 @@ Neben dem reinen Datum können wir auch eine Uhrzeit allein oder Datum und Uhrze
 
 ## Wahrheitswert-Literale
 
-Ein Wahrheitswert-Literal sind die Werte `TRUE` und `FALSE`. Sie stehen für die Wahrheit oder Unwahrheit einer Aussage.
+Ein Wahrheitswert-Literal sind die Werte `true` und `false`. Sie stehen für die Wahrheit oder Unwahrheit einer Aussage.
 
 **MySQL**
 
-Beim Interpretieren der Query wandelt MySQL sie in Zahlen um: `TRUE` und `FALSE`
+Beim Interpretieren der Query wandelt MySQL sie in Zahlen um: `true` und `false`
 werden zu `1` bzw. `0`.
 
 ## NULL

@@ -12,7 +12,7 @@ Mit Subqueries, die mehrere Zeilen und eine Spalte zurückgeben, lassen sich abe
 
 ## Subquery und der Operator ALL
 
-Mit dem Operator `ALL` können wir einen einzelnen Wert mit jedem Wert in der von der Subquery gelieferten Menge vergleichen. Diese Bedingung gibt nur dann `TRUE` zurück, wenn alle Vergleiche des einzelnen Wertes mit den Werten der Menge `TRUE` ergeben.
+Mit dem Operator `ALL` können wir einen einzelnen Wert mit jedem Wert in der von der Subquery gelieferten Menge vergleichen. Diese Bedingung gibt nur dann `true` zurück, wenn alle Vergleiche des einzelnen Wertes mit den Werten der Menge `true` ergeben.
 
 Die folgende künstliche Abfrage prüft zum Beispiel, ob für alle Wohnräume die Bedingung gilt, dass sie günstiger als 200 sind.
 
@@ -61,7 +61,7 @@ SELECT * FROM Users WHERE id IN (
 
 ## Subquery und der Operator ANY
 
-Eine Bedingung mit `ANY` verhält sich ähnlich, gibt aber `TRUE` zurück, wenn mindestens ein Vergleich des einzelnen Wertes mit einem Wert in der Menge `TRUE` ergibt.
+Eine Bedingung mit `ANY` verhält sich ähnlich, gibt aber `true` zurück, wenn mindestens ein Vergleich des einzelnen Wertes mit einem Wert in der Menge `true` ergibt.
 
 Schreiben wir damit dieselbe Abfrage wie zuvor mit `IN`: Wir suchen Nutzer, die mindestens 1 Wohnraum mit einem Preis über 150 besitzen.
 
