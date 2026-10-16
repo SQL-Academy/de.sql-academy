@@ -70,39 +70,25 @@ VALUES (20, 'Table', 8);
 
 ## Unterschiede zwischen den INSERT-Syntaxen
 
-Fügen wir der Warenliste einen Tisch hinzu. Dafür gibt es zwei Wege.
+Angenommen, du willst der Warenliste `Goods` einen neuen Artikel hinzufügen: einen Tisch. Dafür gibt es zwei Wege.
 
 ER-Diagramm der Datenbank Family: [auf SQL Academy öffnen](https://sql-academy.org/de/guide/operator-insert).
 
-### INSERT INTO ... VALUES
-
-Die Werte stehen in Klammern nach `VALUES`. Dieser Weg passt, wenn die Daten **im Voraus bekannt** sind:
+Der gewohnte Weg ist, die Werte nach `VALUES` aufzuzählen:
 
 ```sql
 INSERT INTO Goods (good_id, good_name, type)
 VALUES (20, 'Table', 8);
 ```
 
-So kannst du auch mehrere Zeilen auf einmal einfügen, jede in eigenen Klammern:
-
-```sql
-INSERT INTO Goods (good_id, good_name, type)
-VALUES
-    (20, 'Table', 8),
-    (21, 'Chair', 8),
-    (22, 'Lamp', 8);
-```
-
-### INSERT INTO ... SELECT
-
-Die Werte liefert eine `SELECT`-Query. Sie kommt sogar ohne Tabelle aus und gibt dann einfach die aufgezählten Werte zurück:
+Aber `INSERT` nimmt nicht nur eine fertige Liste an. Statt `VALUES` kannst du eine `SELECT`-Query einsetzen, und alles, was sie zurückgibt, landet in der Tabelle. Dabei kommt die `SELECT`-Query sogar ohne `FROM` aus. Zählst du darin einfach Werte auf, gibt sie diese als einzelne Zeile zurück:
 
 ```sql
 INSERT INTO Goods (good_id, good_name, type)
 SELECT 20, 'Table', 8;
 ```
 
-Beide Wege fügen dieselbe Zeile hinzu:
+Beide Queries führen zum selben Ergebnis — in `Goods` ist ein Tisch dazugekommen:
 
 | good_id | good_name            | type  |
 | ------- | -------------------- | ----- |
@@ -126,7 +112,19 @@ Beide Wege fügen dieselbe Zeile hinzu:
 | 18      | netflix subscription | 4     |
 | **20**  | **Table**            | **8** |
 
-Meistens brauchst du `INSERT ... SELECT` aber, wenn die Daten **aus der Datenbank stammen**: um vorhandene Zeilen zu kopieren oder Berechnungsergebnisse einzufügen. Duplizieren wir zum Beispiel alle Lebensmittel unter neuen Nummern:
+### Wann welcher Weg passt
+
+Wenn die Werte schon vorher feststehen, weil sie zum Beispiel ein Nutzer eingegeben hat, ist `INSERT ... VALUES` am einfachsten. Damit kannst du auch mehrere Zeilen auf einmal einfügen, jede in eigenen Klammern:
+
+```sql
+INSERT INTO Goods (good_id, good_name, type)
+VALUES
+    (20, 'Table', 8),
+    (21, 'Chair', 8),
+    (22, 'Lamp', 8);
+```
+
+`INSERT ... SELECT` hilft dagegen, wenn neue Zeilen aus dem entstehen sollen, was schon in der Datenbank liegt: Datensätze kopieren, in eine andere Tabelle kopieren oder Berechnungsergebnisse speichern. Duplizieren wir zum Beispiel alle Lebensmittel und geben den Kopien um 100 höhere Nummern:
 
 ```sql
 INSERT INTO Goods (good_id, good_name, type)
@@ -134,6 +132,8 @@ SELECT good_id + 100, good_name, type
 FROM Goods
 WHERE type = 2;
 ```
+
+Führ die Query aus und schau ans Ende der Tabelle: Eine einzige Query hat gleich drei Zeilen hinzugefügt — Kopien von bread, milk und potato.
 
 ## Primary Key beim Einfügen eines neuen Datensatzes
 
