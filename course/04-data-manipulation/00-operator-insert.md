@@ -102,15 +102,6 @@ INSERT INTO Goods (good_id, good_name, type)
 SELECT 20, 'Table', 8;
 ```
 
-Meistens brauchst du diesen Weg aber, wenn die Daten **aus der Datenbank stammen**: um vorhandene Zeilen zu kopieren oder Berechnungsergebnisse einzufügen. Duplizieren wir zum Beispiel alle Lebensmittel unter neuen Nummern:
-
-```sql
-INSERT INTO Goods (good_id, good_name, type)
-SELECT good_id + 100, good_name, type
-FROM Goods
-WHERE type = 2;
-```
-
 Beide Wege fügen dieselbe Zeile hinzu:
 
 | good_id | good_name            | type  |
@@ -134,6 +125,15 @@ Beide Wege fügen dieselbe Zeile hinzu:
 | 17      | airsoft game session | 4     |
 | 18      | netflix subscription | 4     |
 | **20**  | **Table**            | **8** |
+
+Meistens brauchst du `INSERT ... SELECT` aber, wenn die Daten **aus der Datenbank stammen**: um vorhandene Zeilen zu kopieren oder Berechnungsergebnisse einzufügen. Duplizieren wir zum Beispiel alle Lebensmittel unter neuen Nummern:
+
+```sql
+INSERT INTO Goods (good_id, good_name, type)
+SELECT good_id + 100, good_name, type
+FROM Goods
+WHERE type = 2;
+```
 
 ## Primary Key beim Einfügen eines neuen Datensatzes
 
