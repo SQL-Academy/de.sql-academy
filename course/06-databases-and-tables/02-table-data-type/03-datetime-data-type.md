@@ -21,13 +21,13 @@ Für Datum und Zeit gibt es in MySQL mehrere Datentypen: `DATE`, `TIME`, `DATETI
 
 Für Datum und Zeit gibt es in PostgreSQL mehrere Datentypen: `DATE`, `TIME`, `TIMESTAMP`, `TIMESTAMPTZ` und `INTERVAL`.
 
-| Typ           | Beschreibung                                                                      | Wertebereich                         | Größe    |
-| :------------ | :-------------------------------------------------------------------------------- | :----------------------------------- | -------- |
-| `DATE`        | Speichert Datumswerte im Format JJJJ-MM-TT. <br /> Zum Beispiel 2022-12-05        | von 4713 v. Chr. bis 5874897 n. Chr. | 4 Bytes  |
-| `TIME`        | Speichert Zeitwerte im Format HH:MM:SS. <br /> Zum Beispiel 14:30:45              | von 00:00:00 bis 24:00:00            | 8 Bytes  |
-| `TIMESTAMP`   | Speichert Datum und Zeit ohne Zeitzone. <br /> Zum Beispiel 2022-12-05 10:37:22   | von 4713 v. Chr. bis 294276 n. Chr.  | 8 Bytes  |
-| `TIMESTAMPTZ` | Speichert Datum und Zeit mit Zeitzone. <br /> Zum Beispiel 2022-12-05 10:37:22+03 | von 4713 v. Chr. bis 294276 n. Chr.  | 8 Bytes  |
-| `INTERVAL`    | Speichert ein Zeitintervall. <br /> Zum Beispiel 1 year 2 months 3 days 4 hours   | von -178000000 bis 178000000 Jahre   | 16 Bytes |
+| Typ           | Beschreibung                                                                              | Wertebereich                         | Größe    |
+| :------------ | :---------------------------------------------------------------------------------------- | :----------------------------------- | -------- |
+| `DATE`        | Speichert Datumswerte im Format JJJJ-MM-TT. <br /> Zum Beispiel 2022-12-05                | von 4713 v. Chr. bis 5874897 n. Chr. | 4 Bytes  |
+| `TIME`        | Speichert Zeitwerte im Format HH:MM:SS. <br /> Zum Beispiel 14:30:45                      | von 00:00:00 bis 24:00:00            | 8 Bytes  |
+| `TIMESTAMP`   | Speichert Datum und Zeit ohne Zeitzone. <br /> Zum Beispiel 2022-12-05 10:37:22           | von 4713 v. Chr. bis 294276 n. Chr.  | 8 Bytes  |
+| `TIMESTAMPTZ` | Speichert einen Zeitpunkt, umgerechnet in UTC. <br /> Zum Beispiel 2022-12-05 10:37:22+03 | von 4713 v. Chr. bis 294276 n. Chr.  | 8 Bytes  |
+| `INTERVAL`    | Speichert ein Zeitintervall. <br /> Zum Beispiel 1 year 2 months 3 days 4 hours           | von -178000000 bis 178000000 Jahre   | 16 Bytes |
 
 **MySQL**
 
@@ -99,8 +99,8 @@ Ergebnis: `2022-06-16 16:37:23` (der Wert hat sich nicht geändert)
 
 ## TIMESTAMPTZ
 
-`TIMESTAMPTZ` (bzw. `TIMESTAMP WITH TIME ZONE`) speichert Datum und Zeit zusammen mit der Zeitzoneninformation.
-PostgreSQL rechnet den Wert für die Speicherung automatisch in UTC um und bei der Ausgabe zurück in die lokale Zeitzone.
+`TIMESTAMPTZ` (bzw. `TIMESTAMP WITH TIME ZONE`) speichert Datum und Zeit unter Berücksichtigung der Zeitzone, die Zeitzone selbst wird aber nicht gespeichert.
+PostgreSQL rechnet den Wert für die Speicherung automatisch in UTC um und bei der Ausgabe zurück in die Zeitzone der aktuellen Sitzung.
 
 ```sql
 CREATE TABLE timestamptz_table (timestamptz_field TIMESTAMPTZ);
@@ -178,4 +178,4 @@ INSERT INTO date_table VALUES(
 SELECT * FROM date_table;
 ```
 
-PostgreSQL hält sich strikt an ISO 8601 und bevorzugt die standardisierten Datumsformate.
+PostgreSQL versteht auch andere Datumsformate, am zuverlässigsten ist aber ISO 8601: Es wird unabhängig von den Einstellungen eindeutig gelesen.

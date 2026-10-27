@@ -34,6 +34,8 @@ Für die Angabe von Datum und Uhrzeit werden folgende Formate verwendet:
 | `TIME`      | `hhh:mm:sss`                                                                                                                                                                       |
 | `YEAR`      | `YYYY` - vollständiges Format <br /> `YY` oder `Y` - Kurzformat, das für Werte 0-69 ein Jahr zwischen 2000 und 2069 und für Werte 70-99 ein Jahr zwischen 1970 und 1999 zurückgibt |
 
+Dabei darf bei der Angabe des Datums jedes beliebige Satzzeichen als Trennzeichen zwischen den Teilen des Datums oder der Uhrzeit verwendet werden. Es ist auch möglich, das Datum ganz ohne Trennzeichen zusammengeschrieben anzugeben.
+
 **PostgreSQL**
 
 | Typ         | Standardformat        |
@@ -42,7 +44,8 @@ Für die Angabe von Datum und Uhrzeit werden folgende Formate verwendet:
 | `TIMESTAMP` | `YYYY-MM-DD hh:mm:ss` |
 | `TIME`      | `hh:mm:ss`            |
 
-Dabei darf bei der Angabe des Datums jedes beliebige Satzzeichen als Trennzeichen zwischen den Teilen des Datums oder der Uhrzeit verwendet werden. Es ist auch möglich, das Datum ganz ohne Trennzeichen zusammengeschrieben anzugeben.
+Die Teile des Datums stehen in der Reihenfolge Jahr-Monat-Tag, und du kannst sie durch einen Bindestrich, einen Schrägstrich oder einen Punkt trennen, die Teile der Uhrzeit nur durch einen Doppelpunkt.
+Datum und Uhrzeit lassen sich auch als durchgehende Ziffernfolge schreiben, dann trennst du aber das Datum von der Uhrzeit durch ein Leerzeichen oder den Buchstaben `T`: zum Beispiel `20220616T163723`.
 
 Beispiele für gültige Angaben von Zeitwerten über die Zeichenkettendarstellung:
 
@@ -66,7 +69,7 @@ SELECT  CAST("2022-06-16 16:37:23" AS DATETIME) AS datetime_1,
 ```sql
 SELECT  CAST('2022-06-16 16:37:23' AS TIMESTAMP) AS timestamp_1,
         CAST('2014/02/22 16:37:22' AS TIMESTAMP) AS timestamp_2,
-        CAST('20220616163723' AS TIMESTAMP) AS timestamp_3,
+        CAST('20220616T163723' AS TIMESTAMP) AS timestamp_3,
         CAST('2021-02-12' AS DATE) AS date_1,
         CAST('16:23:13' AS TIME) AS time_1
 ```
@@ -161,10 +164,10 @@ Dafür wird in PostgreSQL die Funktion `EXTRACT` verwendet:
 
 Es gibt zwei einander sehr ähnliche Datentypen: `DATETIME` und `TIMESTAMP`. Beide sind für die Speicherung von Datum und Uhrzeit gedacht, haben aber einige Unterschiede, die ihre Einsatzgebiete bestimmen.
 
-| Kriterium | `DATETIME`                                                                      | `TIMESTAMP`                                                                                                |
-| :-------- | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------- |
-| Bereich   | von `1000-01-01 00:00:00` <br /> bis `9999-12-31 23:59:59`                      | von `1970-01-01 00:00:00` <br /> bis `2038-01-19 03:14:07`                                                 |
-| Zeitzone  | Wird nicht berücksichtigt <br /> Wird so angezeigt, wie das Datum gesetzt wurde | Wird berücksichtigt <br /> Wird bei Abfragen unter Berücksichtigung der aktuellen Serverzeitzone angezeigt |
+| Kriterium | `DATETIME`                                                                      | `TIMESTAMP`                                                                                                      |
+| :-------- | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------- |
+| Bereich   | von `1000-01-01 00:00:00` <br /> bis `9999-12-31 23:59:59`                      | von `1970-01-01 00:00:00` <br /> bis `2038-01-19 03:14:07`                                                       |
+| Zeitzone  | Wird nicht berücksichtigt <br /> Wird so angezeigt, wie das Datum gesetzt wurde | Wird berücksichtigt <br /> Wird bei Abfragen unter Berücksichtigung der Zeitzone der aktuellen Sitzung angezeigt |
 
 **PostgreSQL**
 
@@ -172,10 +175,10 @@ Es gibt zwei einander sehr ähnliche Datentypen: `DATETIME` und `TIMESTAMP`. Bei
 
 Die wichtigsten Typen für die Speicherung von Datum und Uhrzeit sind `TIMESTAMP` (ohne Zeitzone) und `TIMESTAMPTZ` (mit Zeitzone).
 
-| Kriterium | `TIMESTAMP`                                                                     | `TIMESTAMPTZ`                                                                                              |
-| :-------- | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------- |
-| Bereich   | von `4713 BC` bis `294276 AD`                                                   | von `4713 BC` bis `294276 AD`                                                                              |
-| Zeitzone  | Wird nicht berücksichtigt <br /> Wird so angezeigt, wie das Datum gesetzt wurde | Wird berücksichtigt <br /> Wird bei Abfragen unter Berücksichtigung der aktuellen Serverzeitzone angezeigt |
+| Kriterium | `TIMESTAMP`                                                                     | `TIMESTAMPTZ`                                                                                                    |
+| :-------- | :------------------------------------------------------------------------------ | :--------------------------------------------------------------------------------------------------------------- |
+| Bereich   | von `4713 BC` bis `294276 AD`                                                   | von `4713 BC` bis `294276 AD`                                                                                    |
+| Zeitzone  | Wird nicht berücksichtigt <br /> Wird so angezeigt, wie das Datum gesetzt wurde | Wird berücksichtigt <br /> Wird bei Abfragen unter Berücksichtigung der Zeitzone der aktuellen Sitzung angezeigt |
 
 ## Zeitzonen
 
@@ -185,27 +188,29 @@ Als Bezugspunkt der Zeit wird UTC (Coordinated Universal Time) verwendet. Alle a
 
 Die Zeitzone ist eine der Einstellungen des Datenbankservers und kann festgelegt werden:
 
-- global
-- für den aktuellen Benutzer
-- für die aktuelle Benutzersitzung
-
 **MySQL**
 
+- global
+- für die aktuelle Sitzung
+
 ```sql
-SET GLOBAL time_zone = '+03:00';    // global
-SET time_zone = '+03:00';           // für den aktuellen Benutzer
-SET @@session.time_zone = '+03:00'; // für die aktuelle Benutzersitzung
+SET GLOBAL time_zone = '+03:00'; -- global
+SET time_zone = '+03:00';        -- für die aktuelle Sitzung
 ```
 
 Wird die Zeitzone geändert, werden entsprechend alle Werte vom Typ `TIMESTAMP` unter Berücksichtigung der aktuell aktiven Zeitzone ausgegeben.
 
 **PostgreSQL**
 
+- für die Datenbank
+- für einen bestimmten Benutzer
+- für die aktuelle Sitzung
+
 ```sql
-ALTER DATABASE mydb SET timezone = 'Europe/Moscow';  // global für die Datenbank
-ALTER USER myuser SET timezone = 'Europe/Moscow';    // für einen bestimmten Benutzer
-SET TIME ZONE 'Europe/Moscow';                       // für die aktuelle Sitzung
-SET TIME ZONE '+03:00';                              // für die aktuelle Sitzung
+ALTER DATABASE mydb SET timezone = 'Europe/Moscow'; -- für die Datenbank
+ALTER USER myuser SET timezone = 'Europe/Moscow';   -- für einen bestimmten Benutzer
+SET TIME ZONE 'Europe/Moscow';                      -- für die aktuelle Sitzung per Zonenname
+SET TIME ZONE INTERVAL '+03:00' HOUR TO MINUTE;     -- für die aktuelle Sitzung per UTC-Versatz
 ```
 
 Wird die Zeitzone geändert, werden entsprechend alle Werte vom Typ `TIMESTAMPTZ` unter Berücksichtigung der aktuell aktiven Zeitzone ausgegeben.

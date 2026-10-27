@@ -63,7 +63,7 @@ Nehmen wir die Tabelle `Company`:
 | 1   | Don_avia   |
 | 2   | Aeroflot   |
 | 3   | Dale_avia  |
-| 4   | air_France |
+| 4   | Air_France |
 | 5   | British_AW |
 
 Um die Zeilen 3 bis 5 auszugeben, brauchst du diese Query:
@@ -91,7 +91,7 @@ Als Ergebnis kommt folgende Auswahl zurück:
 | id  | name       |
 | --- | ---------- |
 | 3   | Dale_avia  |
-| 4   | air_France |
+| 4   | Air_France |
 | 5   | British_AW |
 
 In dieser Query werden die ersten zwei Zeilen der Tabelle (1, 2) übersprungen, danach werden die nächsten drei Datensätze (3, 4, 5) ausgegeben.
