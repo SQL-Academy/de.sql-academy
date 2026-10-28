@@ -112,3 +112,29 @@ DROP DATABASE IF EXISTS datenbank_name;
 - `IF EXISTS` (Schlüsselwort) — Die Datenbank wird nur gelöscht, wenn sie existiert. Sonst macht die Query nichts und
   bricht nicht mit einem Fehler ab.
 - `datenbank_name` — Die Datenbank, die gelöscht wird.
+
+## Prüf dich selbst
+
+In der Datenbank `shop` gibt es Tabellen mit Daten. Was passiert, wenn du diese Query ausführst?
+
+```sql
+DROP DATABASE shop;
+```
+
+1. Die Query bricht mit einem Fehler ab: Zuerst müssen die Tabellen gelöscht werden — Du musst die Datenbank vorher nicht leeren: DROP DATABASE löscht sie zusammen mit allen ihren Tabellen.
+
+2. **Richtige Antwort:** Die Datenbank wird mit allen Tabellen und Daten gelöscht — DROP DATABASE löscht die gesamte Datenbank. Danach lassen sich Tabellen und Daten nur noch aus einem Backup wiederherstellen.
+
+3. Die Tabellen werden gelöscht, die leere Datenbank bleibt bestehen — DROP DATABASE löscht nicht nur den Inhalt, sondern auch die Datenbank selbst: Nach der Query taucht sie nicht mehr in der Liste der Datenbanken auf.
+
+Auf dem Server gibt es keine Datenbank `shop`. Was passiert, wenn du diese Query ausführst?
+
+```sql
+DROP DATABASE IF EXISTS shop;
+```
+
+1. Die Query bricht mit einem Fehler ab, weil es die Datenbank nicht gibt — So verhält sich DROP DATABASE ohne IF EXISTS. Genau um diesen Fehler zu vermeiden, gibt es IF EXISTS.
+
+2. **Richtige Antwort:** Die Query macht nichts und bricht nicht mit einem Fehler ab — IF EXISTS löscht die Datenbank nur, wenn sie existiert, und überspringt das Löschen sonst ohne Fehler.
+
+3. Es wird eine leere Datenbank shop angelegt — DROP DATABASE legt nie Datenbanken an, und IF EXISTS prüft nur, ob die Datenbank vor dem Löschen existiert.

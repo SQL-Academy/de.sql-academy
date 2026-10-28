@@ -130,3 +130,42 @@ Wenn du Savepoints nutzt, denk an Folgendes:
   Damit deine Änderungen innerhalb der Transaktion dauerhaft werden, brauchst du `COMMIT`.
 - Wenn du einen Rollback ohne Angabe eines konkreten Savepoints ausführst,
   werden alle zuvor gesetzten Savepoints ignoriert, und die gesamte Transaktion wird zurückgerollt.
+
+## Prüf dich selbst
+
+Vor dem Start der Transaktion haben beide Nutzer ein Guthaben von 500. Wie hoch sind die Guthaben des ersten und des zweiten Nutzers, nachdem diese Queries ausgeführt wurden?
+
+```sql
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE user_id = 1;
+SAVEPOINT after_debit;
+UPDATE accounts SET balance = balance + 100 WHERE user_id = 2;
+ROLLBACK TO SAVEPOINT after_debit;
+
+COMMIT;
+```
+
+1. 500 und 500 — Ein Rollback zum Savepoint nimmt nur die Änderungen zurück, die danach gemacht wurden. Die Abbuchung lief vor dem Savepoint, deshalb schreibt COMMIT sie fest.
+
+2. **Richtige Antwort:** 400 und 500 — Die Abbuchung bleibt, die Gutschrift nach dem Savepoint ist zurückgenommen. Das Geld ist einfach verschwunden – setz einen Savepoint deshalb so, dass ein Rollback zu ihm zusammengehörige Änderungen nicht auseinanderreißt.
+
+3. 400 und 600 — Die Gutschrift lief nach dem Savepoint after_debit, deshalb hat ROLLBACK TO SAVEPOINT sie zurückgenommen.
+
+Dieselben Queries, aber am Ende läuft statt `ROLLBACK TO SAVEPOINT` und `COMMIT` nur `ROLLBACK`. Was bleibt in der Datenbank erhalten?
+
+```sql
+START TRANSACTION;
+
+UPDATE accounts SET balance = balance - 100 WHERE user_id = 1;
+SAVEPOINT after_debit;
+UPDATE accounts SET balance = balance + 100 WHERE user_id = 2;
+
+ROLLBACK;
+```
+
+1. Die Abbuchung beim ersten Nutzer — Ein Savepoint speichert nichts, er markiert nur eine Stelle für einen teilweisen Rollback. ROLLBACK ohne Savepoint-Namen nimmt die gesamte Transaktion zurück.
+
+2. **Richtige Antwort:** Nichts: Beide Guthaben bleiben bei 500 — ROLLBACK ohne Angabe eines Savepoints ignoriert alle Savepoints und bringt die Daten auf den Stand vor dem Start der Transaktion zurück.
+
+3. Beide Änderungen — Die Änderungen einer Transaktion werden erst mit COMMIT dauerhaft. ROLLBACK macht das Gegenteil und nimmt sie zurück.
