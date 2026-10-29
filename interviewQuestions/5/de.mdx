@@ -18,7 +18,7 @@ meta:
   Gibt alle Datensätze aus der rechten Tabelle und die passenden Datensätze aus der linken Tabelle zurück. Gibt es keine Entsprechung, wird `NULL` für die linke Tabelle zurückgegeben.
 
 - `FULL OUTER JOIN`:\
-  Gibt alle Datensätze zurück, sobald es in einer der Tabellen eine Entsprechung gibt.
+  Gibt alle Datensätze aus beiden Tabellen zurück. Passende Zeilen werden zusammengeführt, bei Zeilen ohne Entsprechung werden die Spalten der anderen Tabelle mit `NULL` gefüllt. MySQL unterstützt `FULL OUTER JOIN` nicht: Kombiniere dort `LEFT JOIN` und `RIGHT JOIN` mit `UNION`.
 
 - `CROSS JOIN`:\
   Bildet das kartesische Produkt zweier Tabellen, indem jede Zeile der ersten Tabelle mit jeder Zeile der zweiten Tabelle kombiniert wird.

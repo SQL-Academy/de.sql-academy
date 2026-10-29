@@ -11,8 +11,9 @@ Diesen Vorgang nennt man **Hashing**. Er wird breit eingesetzt, um Sicherheit zu
 
 ### 1. Speichern von Passwörtern
 
-- Statt Passwörter im Klartext zu speichern, legst du sie als Hash ab. Das erhöht die Sicherheit deutlich: Selbst wenn die Datenbank kompromittiert wird, lassen sich die Originalpasswörter nicht wiederherstellen.
-- Eingesetzt werden kryptografische Hash-Funktionen wie `SHA-256` oder `SHA-512`.
+- Statt Passwörter im Klartext zu speichern, legst du sie als Hash ab. Selbst bei einem Datenleck muss ein Angreifer jedes Passwort per Brute Force erraten.
+- Für Passwörter nutzt man spezielle langsame Algorithmen mit Salt: `bcrypt`, `scrypt`, `Argon2`. Ein Salt ist eine zufällige Zeichenkette, die vor dem Hashen an das Passwort angehängt wird. Dadurch ergeben gleiche Passwörter unterschiedliche Hashes.
+- Normale `SHA-256` und `SHA-512` eignen sich nicht für Passwörter: Sie sind zu schnell, und ohne Salt ergeben gleiche Passwörter gleiche Hashes, die sich per Wörterbuch leicht knacken lassen. Passwörter hasht meist die Anwendung, die Datenbank speichert nur das Ergebnis.
 
 ### 2. Prüfung der Datenintegrität
 
@@ -22,39 +23,44 @@ Mit Hash-Funktionen kannst du erkennen, ob Daten verändert wurden. Du bildest e
 
 Hash-Werte eignen sich gut, um große Datenmengen schnell zu vergleichen oder Indizes für eine performantere Suche aufzubauen.
 
-### 4. Eindeutige IDs erzeugen:
+### 4. IDs aus dem Inhalt erzeugen
 
-Hashing hilft dabei, eindeutige Identifier für Datensätze auf Basis ihres Inhalts zu generieren.
+Hashing hilft dabei, IDs für Datensätze auf Basis ihres Inhalts zu generieren. Mit einer starken Hash-Funktion sind sie praktisch eindeutig, auch wenn Kollisionen theoretisch möglich sind.
 
 ## Beispiel für den Einsatz von Hash-Funktionen in SQL:
 
+Prüfen wir, ob sich der Inhalt von Dokumenten nach dem Speichern geändert hat. Beispiel für MySQL: Die Funktion `SHA2(string, 256)` liefert den Hash als 64 Hexadezimalzeichen.
+
 ```sql
--- Tabelle für Benutzer anlegen
-CREATE TABLE Users (
-    UserID INT PRIMARY KEY,
-    Username VARCHAR(50) NOT NULL,
-    PasswordHash VARBINARY(512) NOT NULL
+-- Tabelle für Dokumente mit Hash des Inhalts anlegen
+CREATE TABLE Documents (
+    id INT PRIMARY KEY,
+    content TEXT NOT NULL,
+    content_hash CHAR(64) NOT NULL
 );
 
--- Beim Anlegen eines neuen Benutzers hashen wir das Passwort
-INSERT INTO Users (UserID, Username, PasswordHash)
-VALUES (1, 'user1', HASHBYTES('SHA2_512', 'password123'));
+-- Beim Anlegen eines Dokuments speichern wir den Hash seines Inhalts
+INSERT INTO Documents (id, content, content_hash)
+VALUES (1, 'Vertrag Nr. 1', SHA2('Vertrag Nr. 1', 256));
 
--- Prüfen, ob das eingegebene Passwort zum gespeicherten Hash passt
-SELECT UserID FROM Users
-WHERE Username = 'user1' AND PasswordHash = HASHBYTES('SHA2_512', 'password123');
+-- Dokumente finden, deren Inhalt sich seit dem Speichern des Hashs geändert hat
+SELECT id FROM Documents
+WHERE content_hash <> SHA2(content, 256);
 ```
+
+In PostgreSQL liefert der Ausdruck `encode(sha256(convert_to(content, 'UTF8')), 'hex')` denselben Hash.
 
 ## Empfehlungen und Hinweise
 
 ### Wahl der Hash-Funktion
 
-- Greife zu modernen, robusten Algorithmen wie `SHA-256` oder `SHA-512`.
-- Vermeide veraltete Funktionen wie `MD5` oder `SHA1` — sie haben bekannte Schwachstellen.
+- Für Integritätsprüfungen und Datenvergleiche greifst du zu `SHA-256` oder `SHA-512`.
+- Vermeide `MD5` und `SHA1`, wo Sicherheit zählt: Für sie sind praktische Wege bekannt, Kollisionen zu finden.
+- Für Passwörter nimmst du `bcrypt`, `scrypt` oder `Argon2` mit Salt.
 
-### Sichere Speicherung
+### Speicherformat
 
-Speichere Hashes binär (`VARBINARY`) statt als String (`VARCHAR`), das schont Speicher und vermeidet Genauigkeitsverluste.
+Einen Hash kannst du binär speichern (`VARBINARY` in MySQL, `BYTEA` in PostgreSQL): Er braucht dann halb so viel Platz wie in hexadezimaler Schreibweise.
 
 ### Hashes sind nicht umkehrbar
 

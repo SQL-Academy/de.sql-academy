@@ -37,7 +37,7 @@ SELECT family_member, amount * unit_price AS price FROM Payments
 
 In der Spalte `family_member` der Ergebnismenge stehen die IDs der Datensätze aus der Tabelle `Payments`, die für uns aber wenig aussagen.
 
-Statt dieser IDs wäre es viel sprechender, die Namen der Käufer auszugeben (das Feld `member_name` aus der Tabelle `FamilyMember`).
+Statt dieser IDs wäre es viel sprechender, die Namen der Käufer auszugeben (das Feld `member_name` aus der Tabelle `FamilyMembers`).
 Genau dafür gibt es das Verbinden von Tabellen und den `JOIN`-Operator.
 
 ER-Diagramm der Datenbank Family: [auf SQL Academy öffnen](https://sql-academy.org/de/guide/multi-table-request-join).
@@ -171,7 +171,7 @@ INNER JOIN Pass_in_trip AS pit
     ON pit.passenger = pass.id
 ```
 
-In diesem Beispiel bekommen die Tabellen Passenger und Pass_in_trip die Aliase `pass` bzw. `pit`, mit denen anschließend die Spalten angesprochen werden. Beachte: In beiden Tabellen gibt es ein Feld mit dem Namen `id`. Wenn du nicht angibst, aus welcher Tabelle es kommen soll, übernimmt das DBMS die Auswahl und liefert den Wert aus der **letzten Tabelle** in der JOIN-Kette. In diesem Fall ist das `Pass_in_trip`.
+In diesem Beispiel bekommen die Tabellen Passenger und Pass_in_trip die Aliase `pass` bzw. `pit`, mit denen anschließend die Spalten angesprochen werden. Beachte: In beiden Tabellen gibt es ein Feld mit dem Namen `id`. Wenn du nicht angibst, aus welcher Tabelle es kommen soll, kann das DBMS nicht selbst wählen und meldet einen Fehler wegen einer mehrdeutigen Spalte. Gleichnamige Spalten gibst du deshalb immer zusammen mit der Tabelle oder ihrem Alias an: `pass.id`.
 
 Vergleich mit der Variante ohne Aliase – der Unterschied ist deutlich, oder?
 

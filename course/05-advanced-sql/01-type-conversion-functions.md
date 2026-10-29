@@ -88,33 +88,33 @@ SELECT CAST(12005.6 AS INTEGER) AS cast_example, 12005.4::INTEGER AS operator_ex
 
 Die Funktion CAST kann den übergebenen Wert in einen der folgenden Typen umwandeln:
 
-| Typ                | Beschreibung                                                                                                                                                                                         |
-| :----------------- | :--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DATE`             | Konvertiert den Wert in `DATE`. Format: "YYYY-MM-DD".                                                                                                                                                |
-| `DATETIME`         | Konvertiert den Wert in `DATETIME`. Format: "YYYY-MM-DD hh:mm:ss".                                                                                                                                   |
-| `TIME`             | Konvertiert den Wert in `TIME`. Format: "hh:mm:ss".                                                                                                                                                  |
-| `DECIMAL[(M[,D])]` | Konvertiert den Wert in `DECIMAL`. Hat zwei optionale Argumente `M` und `D`, die die maximale Anzahl der Stellen vor und nach dem Komma festlegen. Standardmäßig ist `D` gleich 0 und `M` gleich 10. |
-| `CHAR[(N)]`        | Konvertiert den Wert in `CHAR`. Als optionales Argument kann die maximale Länge der Zeichenkette übergeben werden.                                                                                   |
-| `SIGNED`           | Konvertiert den Wert in einen `BIGINT`-Wert.                                                                                                                                                         |
-| `UNSIGNED`         | Konvertiert den Wert in einen vorzeichenlosen `BIGINT`-Wert.                                                                                                                                         |
-| `BINARY`           | Konvertiert den Wert in `BINARY`.                                                                                                                                                                    |
-| `YEAR`             | Konvertiert den Wert in ein Jahr.                                                                                                                                                                    |
+| Typ                | Beschreibung                                                                                                                                                                                                          |
+| :----------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `DATE`             | Konvertiert den Wert in `DATE`. Format: "YYYY-MM-DD".                                                                                                                                                                 |
+| `DATETIME`         | Konvertiert den Wert in `DATETIME`. Format: "YYYY-MM-DD hh:mm:ss".                                                                                                                                                    |
+| `TIME`             | Konvertiert den Wert in `TIME`. Format: "hh:mm:ss".                                                                                                                                                                   |
+| `DECIMAL[(M[,D])]` | Konvertiert den Wert in `DECIMAL`. Hat zwei optionale Argumente `M` und `D`, die die maximale Gesamtzahl der Stellen und die Anzahl der Nachkommastellen festlegen. Standardmäßig ist `D` gleich 0 und `M` gleich 10. |
+| `CHAR[(N)]`        | Konvertiert den Wert in `CHAR`. Als optionales Argument kann die maximale Länge der Zeichenkette übergeben werden.                                                                                                    |
+| `SIGNED`           | Konvertiert den Wert in einen `BIGINT`-Wert.                                                                                                                                                                          |
+| `UNSIGNED`         | Konvertiert den Wert in einen vorzeichenlosen `BIGINT`-Wert.                                                                                                                                                          |
+| `BINARY`           | Konvertiert den Wert in `BINARY`.                                                                                                                                                                                     |
+| `YEAR`             | Konvertiert den Wert in ein Jahr.                                                                                                                                                                                     |
 
 **PostgreSQL**
 
 Die Funktion CAST kann den übergebenen Wert in einen der folgenden Typen umwandeln:
 
-| Typ                | Beschreibung                                                                                                                                       |
-| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `DATE`             | Konvertiert den Wert in `DATE`. Format: "YYYY-MM-DD".                                                                                              |
-| `TIMESTAMP`        | Konvertiert den Wert in `TIMESTAMP`. Format: "YYYY-MM-DD hh:mm:ss".                                                                                |
-| `TIME`             | Konvertiert den Wert in `TIME`. Format: "hh:mm:ss".                                                                                                |
-| `NUMERIC[(M[,D])]` | Konvertiert den Wert in `NUMERIC`. Hat zwei optionale Argumente `M` und `D`, die die maximale Anzahl der Stellen vor und nach dem Komma festlegen. |
-| `VARCHAR[(N)]`     | Konvertiert den Wert in `VARCHAR`. Als optionales Argument kann die maximale Länge der Zeichenkette übergeben werden.                              |
-| `INTEGER`          | Konvertiert den Wert in eine ganze Zahl.                                                                                                           |
-| `BIGINT`           | Konvertiert den Wert in eine große ganze Zahl.                                                                                                     |
-| `BOOLEAN`          | Konvertiert den Wert in einen booleschen Typ.                                                                                                      |
-| `TEXT`             | Konvertiert den Wert in einen Texttyp.                                                                                                             |
+| Typ                | Beschreibung                                                                                                                                                        |
+| :----------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| `DATE`             | Konvertiert den Wert in `DATE`. Format: "YYYY-MM-DD".                                                                                                               |
+| `TIMESTAMP`        | Konvertiert den Wert in `TIMESTAMP`. Format: "YYYY-MM-DD hh:mm:ss".                                                                                                 |
+| `TIME`             | Konvertiert den Wert in `TIME`. Format: "hh:mm:ss".                                                                                                                 |
+| `NUMERIC[(M[,D])]` | Konvertiert den Wert in `NUMERIC`. Hat zwei optionale Argumente `M` und `D`, die die maximale Gesamtzahl der Stellen und die Anzahl der Nachkommastellen festlegen. |
+| `VARCHAR[(N)]`     | Konvertiert den Wert in `VARCHAR`. Als optionales Argument kann die maximale Länge der Zeichenkette übergeben werden.                                               |
+| `INTEGER`          | Konvertiert den Wert in eine ganze Zahl.                                                                                                                            |
+| `BIGINT`           | Konvertiert den Wert in eine große ganze Zahl.                                                                                                                      |
+| `BOOLEAN`          | Konvertiert den Wert in einen booleschen Typ.                                                                                                                       |
+| `TEXT`             | Konvertiert den Wert in einen Texttyp.                                                                                                                              |
 
 ## Wenn eine Konvertierung nicht möglich ist
 

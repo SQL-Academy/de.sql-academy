@@ -133,7 +133,7 @@ Mögliche Optionen für `ON DELETE` und `ON UPDATE`:
 
 ## UNIQUE (Einzigartigkeit)
 
-Der UNIQUE-Constraint garantiert, dass alle Werte in einer Spalte oder Spaltengruppe einzigartig sind. Anders als der PRIMARY KEY erlaubt er NULL-Werte (normalerweise nur einen NULL-Wert, da NULL != NULL).
+Der UNIQUE-Constraint garantiert, dass alle Werte in einer Spalte oder Spaltengruppe einzigartig sind. Anders als der PRIMARY KEY erlaubt er NULL-Werte, und zwar beliebig viele: NULL ist keinem anderen NULL gleich, deshalb gelten solche Werte nicht als Duplikate.
 
 ```sql
 CREATE TABLE Users (
@@ -412,7 +412,7 @@ Beim Datenbankdesign solltest du folgende Empfehlungen beherzigen:
 
 Welcher der folgenden SQL-Constraints darf KEINE NULL-Werte enthalten?
 
-1. UNIQUE — Der UNIQUE-Constraint erlaubt NULL-Werte, normalerweise allerdings nur einen einzigen NULL-Wert pro Spalte.
+1. UNIQUE — Der UNIQUE-Constraint erlaubt NULL-Werte, sogar in mehreren Zeilen gleichzeitig: NULL gilt nicht als Duplikat.
 
 2. CHECK — Der CHECK-Constraint prüft die Bedingung nur für nicht-leere Werte, NULL-Werte werden in der Regel von der Prüfung ausgenommen.
 

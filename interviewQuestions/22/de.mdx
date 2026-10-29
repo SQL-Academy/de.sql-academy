@@ -51,8 +51,9 @@ RIGHT JOIN departments d ON e.department_id = d.id;
 
 **FULL OUTER JOIN (FULL JOIN):**
 
-- Liefert alle Datensätze, sobald es in einer der Tabellen einen Treffer gibt.
+- Liefert alle Datensätze aus beiden Tabellen, passende Zeilen werden zusammengeführt.
 - Fehlt der Treffer auf der jeweils anderen Seite, sind die entsprechenden Spalten `NULL`.
+- MySQL unterstützt `FULL OUTER JOIN` nicht: Kombiniere dort `LEFT JOIN` und `RIGHT JOIN` mit `UNION`.
 
 ```sql
 SELECT *

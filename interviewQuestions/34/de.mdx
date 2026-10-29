@@ -9,7 +9,7 @@ meta:
 - Entfernt ausgewählte Datensätze aus einer Tabelle.
 - Mit `WHERE` kannst du gezielt einzelne Datensätze löschen.
 - Die Operation wird zeilenweise im Transaktionslog protokolliert.
-- `ON DELETE`-Trigger werden ausgelöst.
+- `DELETE`-Trigger werden ausgelöst.
 
 ### Syntax
 
@@ -19,11 +19,12 @@ DELETE FROM table_name [WHERE condition];
 
 ## TRUNCATE
 
-- Entfernt sämtliche Daten aus einer Tabelle, ohne Möglichkeit zur Wiederherstellung.
+- Entfernt sämtliche Daten aus einer Tabelle.
 - `WHERE` ist hier nicht erlaubt.
 - Deutlich schneller, da nicht jede gelöschte Zeile geloggt wird.
-- Setzt Auto-Increment-Werte zurück.
-- Trigger werden nicht ausgelöst.
+- Setzt den Auto-Increment-Zähler zurück: in MySQL immer, in PostgreSQL mit `RESTART IDENTITY`.
+- `DELETE`-Trigger werden nicht ausgelöst (in PostgreSQL kannst du einen eigenen Trigger für `TRUNCATE` anlegen).
+- In PostgreSQL lässt sich der Befehl per `ROLLBACK` rückgängig machen, in MySQL nicht: Er schließt die Transaktion implizit ab.
 
 ### Syntax
 
@@ -34,7 +35,7 @@ TRUNCATE TABLE table_name;
 ## DROP
 
 - Entfernt die komplette Tabelle samt Daten, Struktur, Indizes und Constraints.
-- Die Aktion ist unumkehrbar.
+- In MySQL ist die Aktion unumkehrbar, in PostgreSQL kannst du das Löschen innerhalb einer Transaktion per `ROLLBACK` rückgängig machen.
 
 ### Syntax
 
